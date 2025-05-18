@@ -1,110 +1,207 @@
 <!DOCTYPE html>
+
 <html lang="en">
+
 <head>
+
   <meta charset="UTF-8" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
   <title>Coimbatore SFC Membership</title>
+
   <link rel="stylesheet" href="SFC.css">
+
   <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+
   <style>
+
     .qr-section {
+
       text-align: center;
+
       margin-top: 10px;
+
     }
+
     .qr-code {
+
       width: 100px;
+
       height: 100px;
+
       border: 2px solid #000;
+
       border-radius: 8px;
+
     }
+
   </style>
+
 </head>
+
 <body>
+
   <div class="card-wrapper">
+
     <div class="card" id="captureArea">
+
       <img src="bg1.png" class="card-bg" alt="Card background">
+
       <img id="profilePic" class="profile-pic" alt="Profile Photo">
 
+
+
       <div class="name-hashtag">
+
         <div id="memberName" class="member-name"></div>
+
         <div class="hashtag">#CoimbatoreSFC</div>
+
       </div>
+
+
 
       <div class="details">
+
         <div class="row">
+
           <div class="label">MEMBER ID</div>
+
           <div class="colon">:</div>
+
           <div class="value" id="memberID"></div>
+
         </div>
+
         <div class="row">
+
           <div class="label">BLOOD GROUP</div>
+
           <div class="colon">:</div>
+
           <div class="value" id="blood"></div>
+
         </div>
+
         <div class="row">
+
           <div class="label">DOB</div>
+
           <div class="colon">:</div>
+
           <div class="value" id="dob"></div>
+
         </div>
+
         <div class="row">
+
           <div class="label">MOBILE NO</div>
+
           <div class="colon">:</div>
+
           <div class="value" id="phone"></div>
+
         </div>
+
         <div class="row">
+
           <div class="label">ADDRESS</div>
+
           <div class="colon">:</div>
+
           <div class="value" id="address"></div>
+
         </div>
+
+      </div>
+
+
 
       <div class="qr-section">
+
         <img id="qrImage" class="qr-code" alt="QR Code" />
+
       </div>
-      </div>
+
+    </div>
+
+
 
     <div class="button">
+
       <button id="downloadBtn">Download</button>
-    </div>
+
     </div>
 
-  <script>
-    function showMessage() {
-      setTimeout(() => {
-        document.getElementById("message").style.display = "block";
-      }, 1000); // slight delay to simulate download
   </div>
 
+
+
   <script>
+
     const data = JSON.parse(sessionStorage.getItem("formData"));
 
+
+
     if (!data) {
-      alert("Navigate back and fill the form for registration.");
+
+      alert("No data found. Kindly complete the membership form first.");
+
     } else {
+
       document.getElementById("profilePic").src = data.photo;
+
       document.getElementById("memberName").textContent = data.name.toUpperCase();
+
       document.getElementById("memberID").textContent = data.memberId;
+
       document.getElementById("blood").textContent = data.bloodGroup;
+
       document.getElementById("dob").textContent = data.dob;
+
       document.getElementById("phone").textContent = data.mobile;
+
       document.getElementById("address").textContent = data.address;
 
+
+
       if (data.qrCode) {
+
         document.getElementById("qrImage").src = data.qrCode;
+
       }
+
     }
 
+
+
     document.getElementById("downloadBtn").addEventListener("click", function () {
+
       const card = document.getElementById("captureArea");
+
       html2canvas(card).then(canvas => {
+
         const link = document.createElement("a");
+
         link.download = "Coimbatore_SFC.png";
+
         link.href = canvas.toDataURL("image/png");
+
         link.click();
+
       });
+
     });
+
+
 
   </script>
 
+
+
   <div class="card-signature">Coimbatore Suriya Fans Club</div>
+
 </body>
+
 </html>
