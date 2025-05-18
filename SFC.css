@@ -110,7 +110,7 @@ body {
 }
 .qr-code {
   position: absolute;
-  bottom: 20px;
+  bottom: 60px;
   left: 5%;
   width: 70px;
   height: 70px;
