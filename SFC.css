@@ -45,14 +45,14 @@ body {
   aspect-ratio: 11 / 13;
   object-fit: cover;
   border-radius: 10px;
-  border: 3px solid white;
+  border: 3px #FFDD74;
   z-index: 2;
 }
 
 .name-hashtag {
   position: absolute;
-  top: 190px;
-  left: 150px;
+  top: 180px;
+  left: 140px;
   width: 200px;
   z-index: 2;
   color: #FFFAC2;
