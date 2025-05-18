@@ -106,6 +106,18 @@ body {
   width: 10px;
   text-align: center;
   font-weight: bold;
+
+}
+.qr-code {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  width: 90px;
+  height: 90px;
+  border: 2px solid #000;
+  border-radius: 10px;
+  background-color: #fff;
+  padding: 5px;
 }
 
 .value {
@@ -135,17 +147,6 @@ body {
   font-size: 10px;
   color: rgba(255, 255, 255, 0.4);
   z-index: 3;
-}
-.qr-code {
-  position: absolute;
-  bottom: 20px;
-  right: 20px;
-  width: 90px;
-  height: 90px;
-  border: 2px solid #000;
-  border-radius: 10px;
-  background-color: #fff;
-  padding: 5px;
 }
 .card {
   position: relative;
