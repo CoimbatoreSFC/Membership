@@ -66,7 +66,7 @@
 
       <label>Date of Birth:</label>
       <input type="date" name="dob" required />
-      <input type="text" name="phone" placeholder="Mobile No" required />
+      <input type="number" name="phone" placeholder="Mobile No" required />
       <textarea name="address" placeholder="Address" required></textarea>
 
       <label>Upload Photo:</label>
@@ -161,7 +161,7 @@
       e.preventDefault();
 
       if (!croppedImageData) {
-        alert("Please crop and save the photo before submitting.");
+        alert("Crop & upload your photo before submitting.");
         return;
       }
 
