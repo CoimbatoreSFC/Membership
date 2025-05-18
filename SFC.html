@@ -56,16 +56,21 @@
           <div class="colon">:</div>
           <div class="value" id="address"></div>
         </div>
-      </div>
 
       <div class="qr-section">
         <img id="qrImage" class="qr-code" alt="QR Code" />
       </div>
-    </div>
 
     <div class="button">
       <button id="downloadBtn">Download</button>
     </div>
+    <div id="message">You're a Coimbatore SFC member now!</div>
+
+  <script>
+    function showMessage() {
+      setTimeout(() => {
+        document.getElementById("message").style.display = "block";
+      }, 1000); // slight delay to simulate download
   </div>
 
   <script>
