@@ -22,7 +22,7 @@
 <body>
   <div class="card-wrapper">
     <div class="card" id="captureArea">
-      <img src="bg1.jpg" class="card-bg" alt="Card background">
+      <img src="bg1.png" class="card-bg" alt="Card background">
       <img id="profilePic" class="profile-pic" alt="Profile Photo">
 
       <div class="name-hashtag">
@@ -91,7 +91,7 @@
       const card = document.getElementById("captureArea");
       html2canvas(card).then(canvas => {
         const link = document.createElement("a");
-        link.download = "Coimbatore_SFC.jpg";
+        link.download = "Coimbatore_SFC.png";
         link.href = canvas.toDataURL("image/png");
         link.click();
       });
