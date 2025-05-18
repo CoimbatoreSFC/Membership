@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Coimbatore Suriya Fans Club Membership</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="1.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css"/>
+  <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+  <style>
+    #loading {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(255,255,255,0.8);
+      z-index: 9999;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .pulse-logo {
+      animation: pulseGlow 1.5s ease-in-out infinite;
+    }
+    @keyframes pulseGlow {
+      0% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.2); opacity: 0.6; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <center>
+      <h2>COIMBATORE SFC</h2>
+      <h3>MEMBERSHIP REGISTRATION</h3>
+    </center>
+
+    <form id="membershipForm">
+      <input type="text" name="name" placeholder="Name" required />
+
+      <label>Member ID:</label>
+      <input type="text" name="memberID" id="memberID" readonly />
+
+      <label>Blood Group:</label>
+      <div class="blood-group">
+        <select id="bloodType" required>
+          <option value="">--Select--</option>
+          <option value="A ">A</option>
+          <option value="B ">B</option>
+          <option value="O ">O</option>
+          <option value="A1 ">A1</option>
+          <option value="A2 ">A2</option>
+          <option value="AB ">AB</option>
+          <option value="A1B ">A1B</option>
+          <option value="A2B ">A2B</option>
+          <option value="Other ">Other</option>
+        </select>
+        <select id="rhFactor" required>
+          <option value="+'ve">+'ve</option>
+          <option value="-'ve">-'ve</option>
+        </select>
+      </div>
+
+      <label>Date of Birth:</label>
+      <input type="date" name="dob" required />
+      <input type="text" name="phone" placeholder="Mobile No" required />
+      <textarea name="address" placeholder="Address" required></textarea>
+
+      <label>Upload Photo:</label>
+      <input type="file" id="photoInput" accept="image/*" required />
+
+      <div id="cropContainer" style="display: none; text-align: center;">
+        <img id="imagePreview" style="max-width: 100%; max-height: 300px;" />
+        <br>
+        <button type="button" id="cropBtn">Crop & Save</button>
+      </div>
+
+      <button type="submit">REGISTER</button>
+    </form>
+  </div>
+
+  <div id="loading">
+    <img src="logo.png" alt="Loading..." class="pulse-logo" width="100">
+    <p style="margin-top: 20px; color: black;">Registering You As A Member.....</p>
+  </div>
+
+  <canvas id="canvas" width="640" height="640" style="display: none;"></canvas>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
+  <script>
+    const memberIDInput = document.getElementById("memberID");
+
+    // Generate random, non-repeating CBE ID
+    function getUniqueMemberID() {
+      let usedIDs = JSON.parse(localStorage.getItem("usedIDs") || "[]");
+      let newID;
+
+      do {
+        const randomNum = Math.floor(10000 + Math.random() * 90000);
+        newID = "CBE" + randomNum;
+      } while (usedIDs.includes(newID));
+
+      usedIDs.push(newID);
+      localStorage.setItem("usedIDs", JSON.stringify(usedIDs));
+      return newID;
+    }
+
+    memberIDInput.value = getUniqueMemberID();
+
+    let cropper;
+    const photoInput = document.getElementById("photoInput");
+    const imagePreview = document.getElementById("imagePreview");
+    const cropContainer = document.getElementById("cropContainer");
+    const cropBtn = document.getElementById("cropBtn");
+    let croppedImageData = null;
+
+    photoInput.addEventListener("change", function () {
+      const file = this.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          imagePreview.src = e.target.result;
+          cropContainer.style.display = "block";
+          if (cropper) cropper.destroy();
+          cropper = new Cropper(imagePreview, {
+            aspectRatio: 1,
+            viewMode: 1
+          });
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+
+    cropBtn.addEventListener("click", function () {
+      const canvas = document.getElementById("canvas");
+      const ctx = canvas.getContext("2d");
+
+      const croppedCanvas = cropper.getCroppedCanvas({
+        width: 640,
+        height: 640,
+        imageSmoothingQuality: "high"
+      });
+
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.drawImage(croppedCanvas, 0, 0, 640, 640);
+      croppedImageData = canvas.toDataURL("image/jpeg");
+
+      alert("Photo cropped and saved!");
+      cropContainer.style.display = "none";
+    });
+
+    function formatDate(isoDate) {
+      const [year, month, day] = isoDate.split("-");
+      return `${day}/${month}/${year}`;
+    }
+
+    document.getElementById("membershipForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      if (!croppedImageData) {
+        alert("Please crop and save the photo before submitting.");
+        return;
+      }
+
+      document.getElementById("loading").style.display = "flex";
+
+      setTimeout(() => {
+        const formData = new FormData(this);
+        const bloodType = document.getElementById("bloodType").value;
+        const rhFactor = document.getElementById("rhFactor").value;
+        const bloodGroup = bloodType + rhFactor;
+
+        const data = {
+          name: formData.get("name"),
+          memberId: formData.get("memberID"),
+          bloodGroup: bloodGroup,
+          dob: formatDate(formData.get("dob")),
+          mobile: formData.get("phone"),
+          address: formData.get("address"),
+          photo: croppedImageData
+        };
+
+        const qrContent = `Name: ${data.name}\nID: ${data.memberId}\nPhone: ${data.mobile}`;
+        QRCode.toDataURL(qrContent)
+          .then(qrUrl => {
+            data.qrCode = qrUrl;
+            sessionStorage.setItem("formData", JSON.stringify(data));
+
+            fetch('https://script.google.com/macros/s/AKfycbx5OIiOwp2I4osn9dIJoUq7wSa3oMEHqlA3mXgYO1ICclZkjwzMGeceqMRLKXPforCL/exec', {
+              method: 'POST',
+              mode: 'no-cors',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify(data)
+            }).then(() => {
+              window.location.href = "sfc.html";
+            }).catch(err => {
+              console.error('Error sending data', err);
+              alert("Error submitting the form.");
+              document.getElementById("loading").style.display = "none";
+            });
+          })
+          .catch(err => {
+            console.error("QR Code generation failed", err);
+            alert("Failed to generate QR code.");
+            document.getElementById("loading").style.display = "none";
+          });
+
+      }, 4000);
+    });
+  </script>
+
+  <div class="footer-credit">Coimbatore Suriya Fans Club © 2025</div>
+  <div class="card-signature">Coimbatore OSFC</div>
+</body>
+</html>
