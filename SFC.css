@@ -111,11 +111,11 @@ body {
 .qr-code {
   position: absolute;
   bottom: 20px;
-  right: 20px;
-  width: 90px;
-  height: 90px;
+  left: 5%;
+  width: 70px;
+  height: 70px;
   border: 2px solid #000;
-  border-radius: 5px;
+  border-radius: 2px;
   z-index: 2;
   background-color: #fff;
   padding: 5px;
