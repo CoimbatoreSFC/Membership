@@ -72,7 +72,7 @@
     const data = JSON.parse(sessionStorage.getItem("formData"));
 
     if (!data) {
-      alert("No form data found. Please complete the membership form first.");
+      alert("No data found. Kindly complete the membership form first.");
     } else {
       document.getElementById("profilePic").src = data.photo;
       document.getElementById("memberName").textContent = data.name.toUpperCase();
