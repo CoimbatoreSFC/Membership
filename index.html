@@ -2,219 +2,859 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Coimbatore Suriya Fans Club Membership</title>
+  <title>Coimbatore Suriya Fans Club – Membership Registration</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="1.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css"/>
   <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rajdhani:wght@400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
   <style>
+    :root {
+      --gold: #F4B942;
+      --gold-dark: #C9921A;
+      --gold-light: #FFDE88;
+      --deep: #080808;
+      --surface: #111111;
+      --card: #161616;
+      --border: rgba(244,185,66,0.15);
+      --text: #D4D4D8;
+      --muted: #555;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Rajdhani', sans-serif;
+      background: var(--deep);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ── BACKGROUND ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 20% 20%, rgba(244,185,66,0.06) 0%, transparent 55%),
+        radial-gradient(ellipse at 80% 80%, rgba(201,146,26,0.04) 0%, transparent 50%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── PARTICLES ── */
+    #particles {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+    .particle {
+      position: absolute;
+      border-radius: 50%;
+      background: var(--gold);
+      opacity: 0;
+      animation: floatUp linear infinite;
+    }
+    @keyframes floatUp {
+      0%   { opacity: 0; transform: translateY(0) scale(0); }
+      10%  { opacity: 0.35; }
+      90%  { opacity: 0.1; }
+      100% { opacity: 0; transform: translateY(-100vh) scale(1); }
+    }
+
+    /* ── HEADER ── */
+    .page-header {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 48px 24px 32px;
+      border-bottom: 1px solid var(--border);
+      background: rgba(8,8,8,0.7);
+      backdrop-filter: blur(12px);
+    }
+    .header-logo {
+      width: 72px;
+      height: 72px;
+      object-fit: contain;
+      margin-bottom: 16px;
+      animation: logoFloat 4s ease-in-out infinite;
+      filter: drop-shadow(0 0 20px rgba(244,185,66,0.3));
+    }
+    @keyframes logoFloat {
+      0%, 100% { transform: translateY(0); }
+      50%      { transform: translateY(-8px); }
+    }
+    .header-club {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2rem, 6vw, 3.5rem);
+      letter-spacing: 0.08em;
+      background: linear-gradient(135deg, #F4B942 0%, #FFDE88 50%, #C9921A 100%);
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: shimmer 4s linear infinite;
+      line-height: 1;
+    }
+    @keyframes shimmer {
+      0%   { background-position: -200% center; }
+      100% { background-position:  200% center; }
+    }
+    .header-sub {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: rgba(244,185,66,0.55);
+      margin-top: 6px;
+    }
+    .header-bar {
+      width: 60px;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      margin: 14px auto 0;
+      border-radius: 2px;
+    }
+
+    /* ── MAIN WRAPPER ── */
+    .wrapper {
+      position: relative;
+      z-index: 1;
+      max-width: 560px;
+      margin: 0 auto;
+      padding: 32px 20px 60px;
+    }
+
+    /* ── STEP INDICATOR ── */
+    .steps {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      margin-bottom: 32px;
+    }
+    .step-dot {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 1.5px solid var(--muted);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 14px;
+      color: var(--muted);
+      transition: all 0.4s ease;
+      position: relative;
+      z-index: 1;
+      background: var(--deep);
+    }
+    .step-dot.active {
+      border-color: var(--gold);
+      color: var(--gold);
+      box-shadow: 0 0 16px rgba(244,185,66,0.25);
+    }
+    .step-dot.done {
+      border-color: var(--gold);
+      background: var(--gold);
+      color: #000;
+    }
+    .step-line {
+      flex: 1;
+      height: 1px;
+      background: var(--muted);
+      max-width: 48px;
+      transition: background 0.4s ease;
+    }
+    .step-line.done { background: var(--gold); }
+    .step-labels {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 8px;
+      padding: 0 4px;
+    }
+    .step-label {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      transition: color 0.3s;
+      flex: 1;
+      text-align: center;
+    }
+    .step-label.active { color: var(--gold); }
+
+    /* ── CARD SECTIONS ── */
+    .form-section {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 28px 24px;
+      margin-bottom: 16px;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.3s;
+    }
+    .form-section:focus-within {
+      border-color: rgba(244,185,66,0.4);
+    }
+    .form-section::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .form-section:focus-within::before { opacity: 1; }
+
+    .section-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.1rem;
+      letter-spacing: 0.1em;
+      color: var(--gold);
+      margin-bottom: 18px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .section-title i {
+      font-size: 14px;
+      opacity: 0.7;
+    }
+    .section-title::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: rgba(244,185,66,0.12);
+    }
+
+    /* ── MEMBER ID BADGE ── */
+    .member-id-wrap {
+      background: rgba(244,185,66,0.06);
+      border: 1px solid rgba(244,185,66,0.2);
+      border-radius: 12px;
+      padding: 14px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+    .member-id-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(244,185,66,0.6);
+    }
+    .member-id-value {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.4rem;
+      letter-spacing: 0.1em;
+      color: var(--gold);
+    }
+    .member-id-dot {
+      width: 8px;
+      height: 8px;
+      background: #4ade80;
+      border-radius: 50%;
+      animation: blink 2s ease-in-out infinite;
+    }
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0.3; }
+    }
+
+    /* ── FIELD GROUPS ── */
+    .field-group {
+      margin-bottom: 16px;
+    }
+    .field-label {
+      display: block;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(244,185,66,0.6);
+      margin-bottom: 8px;
+    }
+
+    input[type="text"],
+    input[type="number"],
+    input[type="date"],
+    textarea,
+    select {
+      width: 100%;
+      padding: 13px 16px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 10px;
+      color: var(--text);
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 15px;
+      font-weight: 600;
+      outline: none;
+      transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
+      -webkit-appearance: none;
+    }
+    input[type="text"]:focus,
+    input[type="number"]:focus,
+    input[type="date"]:focus,
+    textarea:focus,
+    select:focus {
+      border-color: rgba(244,185,66,0.5);
+      background: rgba(244,185,66,0.04);
+      box-shadow: 0 0 0 3px rgba(244,185,66,0.08);
+    }
+    input::placeholder, textarea::placeholder {
+      color: rgba(255,255,255,0.2);
+    }
+    select option {
+      background: var(--card);
+      color: var(--text);
+    }
+    textarea {
+      resize: vertical;
+      min-height: 90px;
+      line-height: 1.5;
+    }
+
+    /* ── BLOOD GROUP ROW ── */
+    .blood-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    /* ── PHOTO UPLOAD ── */
+    .photo-upload-zone {
+      border: 2px dashed rgba(244,185,66,0.2);
+      border-radius: 14px;
+      padding: 32px 20px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .photo-upload-zone:hover {
+      border-color: rgba(244,185,66,0.5);
+      background: rgba(244,185,66,0.03);
+    }
+    .photo-upload-zone.has-image {
+      border-style: solid;
+      border-color: rgba(244,185,66,0.4);
+      padding: 12px;
+    }
+    .upload-icon {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+      opacity: 0.4;
+    }
+    .upload-text {
+      font-size: 13px;
+      font-weight: 700;
+      color: rgba(244,185,66,0.7);
+      letter-spacing: 0.08em;
+    }
+    .upload-hint {
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+    #photoInput { display: none; }
+    .photo-preview-img {
+      width: 100%;
+      max-height: 260px;
+      object-fit: cover;
+      border-radius: 10px;
+      display: none;
+    }
+    .photo-preview-img.visible { display: block; }
+
+    /* ── CROP SECTION ── */
+    #cropContainer {
+      display: none;
+      margin-top: 16px;
+    }
+    #imagePreview {
+      max-width: 100%;
+      max-height: 280px;
+      display: block;
+    }
+    .btn-crop {
+      width: 100%;
+      margin-top: 12px;
+      padding: 12px;
+      background: rgba(244,185,66,0.1);
+      border: 1px solid rgba(244,185,66,0.3);
+      border-radius: 10px;
+      color: var(--gold);
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-crop:hover {
+      background: rgba(244,185,66,0.18);
+      border-color: var(--gold);
+    }
+    .crop-done-badge {
+      display: none;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 14px;
+      background: rgba(74,222,128,0.08);
+      border: 1px solid rgba(74,222,128,0.2);
+      border-radius: 8px;
+      margin-top: 12px;
+      font-size: 12px;
+      font-weight: 700;
+      color: #4ade80;
+      letter-spacing: 0.08em;
+    }
+    .crop-done-badge.visible { display: flex; }
+
+    /* ── SUBMIT BUTTON ── */
+    .btn-submit {
+      width: 100%;
+      padding: 16px;
+      background: var(--gold);
+      border: none;
+      border-radius: 14px;
+      color: #000;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.3rem;
+      letter-spacing: 0.15em;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.25s ease;
+      margin-top: 8px;
+    }
+    .btn-submit::before {
+      content: '';
+      position: absolute;
+      inset: -4px;
+      border-radius: 16px;
+      border: 1px solid rgba(244,185,66,0.4);
+      opacity: 0;
+      transition: opacity 0.3s, transform 0.3s;
+      pointer-events: none;
+    }
+    .btn-submit:hover {
+      background: #fff;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(244,185,66,0.3);
+    }
+    .btn-submit:hover::before {
+      opacity: 1;
+      transform: scale(1.04);
+    }
+    .btn-submit:active {
+      transform: translateY(0);
+    }
+
+    /* ── FOOTER ── */
+    .footer {
+      text-align: center;
+      margin-top: 24px;
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.1);
+      font-weight: 700;
+    }
+
+    /* ── LOADING OVERLAY ── */
     #loading {
       display: none;
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(255,255,255,0.8);
+      inset: 0;
+      background: rgba(8,8,8,0.92);
+      backdrop-filter: blur(16px);
       z-index: 9999;
       flex-direction: column;
       align-items: center;
       justify-content: center;
+      gap: 20px;
     }
-    .pulse-logo {
+    #loading.active { display: flex; }
+    .loading-logo {
+      width: 90px;
+      height: 90px;
+      object-fit: contain;
       animation: pulseGlow 1.5s ease-in-out infinite;
+      filter: drop-shadow(0 0 24px rgba(244,185,66,0.5));
     }
     @keyframes pulseGlow {
-      0% { transform: scale(1); opacity: 1; }
-      50% { transform: scale(1.2); opacity: 0.6; }
-      100% { transform: scale(1); opacity: 1; }
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50%       { transform: scale(1.15); opacity: 0.7; }
+    }
+    .loading-bar-track {
+      width: 200px;
+      height: 2px;
+      background: rgba(244,185,66,0.12);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+    .loading-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #C9921A, #F4B942, #FFDE88);
+      animation: loadBar 3.8s ease forwards;
+    }
+    @keyframes loadBar { from { width: 0; } to { width: 100%; } }
+    .loading-text {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(244,185,66,0.7);
+    }
+    .loading-dots::after {
+      content: '';
+      animation: dots 1.5s steps(4, end) infinite;
+    }
+    @keyframes dots {
+      0%  { content: ''; }
+      25% { content: '.'; }
+      50% { content: '..'; }
+      75% { content: '...'; }
+    }
+
+    /* ── SCROLL PROGRESS ── */
+    #scrollBar {
+      position: fixed;
+      top: 0; left: 0;
+      height: 2px;
+      background: linear-gradient(90deg, #C9921A, #F4B942);
+      z-index: 9999;
+      width: 0%;
+      transition: width 0.08s linear;
+    }
+
+    /* ── REVEAL ANIMATIONS ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── MOBILE ── */
+    @media (max-width: 480px) {
+      .form-section { padding: 20px 16px; }
+      .wrapper { padding: 24px 14px 60px; }
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <center>
-      <h1>COIMBATORE SFC</h1>
-      <h3>MEMBERSHIP REGISTRATION</h3>
-    </center>
 
-    <form id="membershipForm">
-      <input type="text" name="name" placeholder="Name" required />
+<div id="scrollBar"></div>
+<div id="particles"></div>
 
-      <label>Member ID:</label>
-      <input type="text" name="memberID" id="memberID" readonly />
+<!-- LOADING -->
+<div id="loading">
+  <img src="Logo.png" alt="Loading" class="loading-logo">
+  <div class="loading-bar-track"><div class="loading-bar-fill"></div></div>
+  <div class="loading-text">Registering your membership<span class="loading-dots"></span></div>
+</div>
 
-      <label>Blood Group:</label>
-      <div class="blood-group">
-        <select id="bloodType" required>
-          <option value="">--Select--</option>
-          <option value="A ">A</option>
-          <option value="B ">B</option>
-          <option value="O ">O</option>
-          <option value="A1 ">A1</option>
-          <option value="A2 ">A2</option>
-          <option value="AB ">AB</option>
-          <option value="A1B ">A1B</option>
-          <option value="A2B ">A2B</option>
-          <option value="Other ">Other</option>
-        </select>
-        <select id="rhFactor" required>
-          <option value="+'ve">+'ve</option>
-          <option value="-'ve">-'ve</option>
-        </select>
-      </div>
-      <label>Date of Birth:</label>
-      <input type="date" name="dob" required />
-      <input type="number" name="phone" placeholder="Mobile No" required />
-      <textarea name="address" placeholder="Address" required></textarea>
+<!-- HEADER -->
+<header class="page-header">
+  <img src="Logo.png" alt="CSFC Logo" class="header-logo" onerror="this.style.display='none'">
+  <div class="header-club">Coimbatore SFC</div>
+  <div class="header-sub">Official Membership Registration</div>
+  <div class="header-bar"></div>
+</header>
 
-      <label>Upload Photo:</label>
-      <input type="file" id="photoInput" accept="image/*" required />
+<!-- MAIN -->
+<div class="wrapper">
 
-      <div id="cropContainer" style="display: none; text-align: center;">
-        <img id="imagePreview" style="max-width: 100%; max-height: 300px;" />
-        <br>
-        <button type="button" id="cropBtn">Crop & Upload</button>
-      </div>
-
-      <button type="submit">REGISTER</button>
-    </form>
+  <!-- STEPS -->
+  <div class="steps reveal">
+    <div class="step-dot active" id="s1">1</div>
+    <div class="step-line" id="l1"></div>
+    <div class="step-dot" id="s2">2</div>
+    <div class="step-line" id="l2"></div>
+    <div class="step-dot" id="s3">3</div>
+  </div>
+  <div class="step-labels reveal">
+    <span class="step-label active" id="sl1">Personal</span>
+    <span class="step-label" id="sl2">Contact</span>
+    <span class="step-label" id="sl3">Photo</span>
   </div>
 
-  <div id="loading">
-    <img src="Logo.png" alt="Loading..." class="pulse-logo" width="100">
-    <p style="margin-top: 20px; color: black;">Registering you as a member.....</p>
+  <form id="membershipForm" autocomplete="off">
+
+    <!-- SECTION 1: IDENTITY -->
+    <div class="form-section reveal" style="transition-delay:0.1s">
+      <div class="section-title">Identity</div>
+
+      <!-- Member ID badge -->
+      <div class="member-id-wrap">
+        <div>
+          <div class="member-id-label">Member ID</div>
+          <div class="member-id-value" id="memberIDDisplay">CBE—</div>
+        </div>
+        <div class="member-id-dot"></div>
+      </div>
+      <input type="hidden" name="memberID" id="memberID" />
+
+      <div class="field-group">
+        <label class="field-label">Full Name</label>
+        <input type="text" name="name" placeholder="Enter your full name" required />
+      </div>
+
+      <div class="field-group">
+        <label class="field-label">Date of Birth</label>
+        <input type="date" name="dob" required />
+      </div>
+
+      <div class="field-group">
+        <label class="field-label">Blood Group</label>
+        <div class="blood-row">
+          <select id="bloodType" required>
+            <option value="">Blood Type</option>
+            <option value="A ">A</option>
+            <option value="B ">B</option>
+            <option value="O ">O</option>
+            <option value="A1 ">A1</option>
+            <option value="A2 ">A2</option>
+            <option value="AB ">AB</option>
+            <option value="A1B ">A1B</option>
+            <option value="A2B ">A2B</option>
+            <option value="Other ">Other</option>
+          </select>
+          <select id="rhFactor" required>
+            <option value="+'ve">+ Positive</option>
+            <option value="-'ve">− Negative</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 2: CONTACT -->
+    <div class="form-section reveal" style="transition-delay:0.2s">
+      <div class="section-title">Contact</div>
+
+      <div class="field-group">
+        <label class="field-label">Mobile Number</label>
+        <input type="number" name="phone" placeholder="+91 XXXXX XXXXX" required />
+      </div>
+
+      <div class="field-group">
+        <label class="field-label">Address</label>
+        <textarea name="address" placeholder="Enter your full address..." required></textarea>
+      </div>
+    </div>
+
+    <!-- SECTION 3: PHOTO -->
+    <div class="form-section reveal" style="transition-delay:0.3s">
+      <div class="section-title">Photo</div>
+
+      <!-- Upload zone -->
+      <div class="photo-upload-zone" id="uploadZone" onclick="document.getElementById('photoInput').click()">
+        <div class="upload-icon">📷</div>
+        <div class="upload-text">Tap to upload photo</div>
+        <div class="upload-hint">JPG, PNG — will be cropped to square</div>
+      </div>
+      <input type="file" id="photoInput" accept="image/*" />
+
+      <!-- Crop area -->
+      <div id="cropContainer">
+        <img id="imagePreview" />
+        <button type="button" class="btn-crop" id="cropBtn">✂ Crop & Confirm Photo</button>
+      </div>
+
+      <!-- Done badge -->
+      <div class="crop-done-badge" id="cropDoneBadge">
+        <span>✓</span> Photo confirmed — ready to submit
+      </div>
+    </div>
+
+    <!-- SUBMIT -->
+    <button type="submit" class="btn-submit reveal" style="transition-delay:0.4s">
+      Complete Registration →
+    </button>
+
+  </form>
+
+  <div class="footer reveal" style="transition-delay:0.5s">
+    Coimbatore Suriya Fans Club © 2025 · #AnbaanaFans
   </div>
+</div>
 
-  <canvas id="canvas" width="640" height="640" style="display: none;"></canvas>
+<canvas id="canvas" width="640" height="640" style="display:none;"></canvas>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
-  <script>
-    const memberIDInput = document.getElementById("memberID");
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
+<script>
+  /* ── PARTICLES ── */
+  const pContainer = document.getElementById('particles');
+  for (let i = 0; i < 22; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    const size = Math.random() * 3 + 1;
+    p.style.cssText = `
+      width:${size}px; height:${size}px;
+      left:${Math.random()*100}%;
+      bottom:${-size}px;
+      animation-duration:${8 + Math.random()*14}s;
+      animation-delay:${Math.random()*10}s;
+    `;
+    pContainer.appendChild(p);
+  }
 
-    // Generate random, non-repeating CBE ID
-    function getUniqueMemberID() {
-      let usedIDs = JSON.parse(localStorage.getItem("usedIDs") || "[]");
-      let newID;
+  /* ── SCROLL PROGRESS ── */
+  window.addEventListener('scroll', () => {
+    const docH = document.documentElement.scrollHeight - window.innerHeight;
+    document.getElementById('scrollBar').style.width = (docH > 0 ? (window.scrollY / docH) * 100 : 0) + '%';
+  }, { passive: true });
 
-      do {
-        const randomNum = Math.floor(10000 + Math.random() * 90000);
-        newID = "CBE" + randomNum;
-      } while (usedIDs.includes(newID));
+  /* ── REVEAL ON SCROLL ── */
+  const revealObs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); revealObs.unobserve(e.target); } });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
 
-      usedIDs.push(newID);
-      localStorage.setItem("usedIDs", JSON.stringify(usedIDs));
-      return newID;
+  /* ── MEMBER ID ── */
+  function getUniqueMemberID() {
+    let used = JSON.parse(localStorage.getItem("usedIDs") || "[]");
+    let id;
+    do { id = "CBE" + Math.floor(10000 + Math.random() * 90000); }
+    while (used.includes(id));
+    used.push(id);
+    localStorage.setItem("usedIDs", JSON.stringify(used));
+    return id;
+  }
+  const newID = getUniqueMemberID();
+  document.getElementById('memberID').value = newID;
+  document.getElementById('memberIDDisplay').textContent = newID;
+
+  /* ── STEP INDICATOR UPDATE ── */
+  function updateSteps(active) {
+    for (let i = 1; i <= 3; i++) {
+      const dot = document.getElementById('s' + i);
+      const lbl = document.getElementById('sl' + i);
+      dot.classList.remove('active', 'done');
+      lbl.classList.remove('active');
+      if (i < active) { dot.classList.add('done'); dot.textContent = '✓'; }
+      else if (i === active) { dot.classList.add('active'); lbl.classList.add('active'); }
+      if (i < 3) {
+        const line = document.getElementById('l' + i);
+        line.classList.toggle('done', i < active);
+      }
+    }
+  }
+
+  /* Update steps on field interaction */
+  document.querySelectorAll('[name="name"],[name="dob"]').forEach(el => el.addEventListener('input', () => updateSteps(1)));
+  document.querySelectorAll('[name="phone"],[name="address"]').forEach(el => el.addEventListener('input', () => updateSteps(2)));
+
+  /* ── PHOTO / CROP ── */
+  let cropper;
+  let croppedImageData = null;
+  const photoInput  = document.getElementById('photoInput');
+  const imagePreview = document.getElementById('imagePreview');
+  const cropContainer = document.getElementById('cropContainer');
+  const uploadZone  = document.getElementById('uploadZone');
+
+  photoInput.addEventListener('change', function () {
+    const file = this.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = e => {
+      imagePreview.src = e.target.result;
+      cropContainer.style.display = 'block';
+      uploadZone.style.display = 'none';
+      if (cropper) cropper.destroy();
+      cropper = new Cropper(imagePreview, { aspectRatio: 1, viewMode: 1 });
+      updateSteps(3);
+    };
+    reader.readAsDataURL(file);
+  });
+
+  document.getElementById('cropBtn').addEventListener('click', function () {
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+    const cc = cropper.getCroppedCanvas({ width: 640, height: 640, imageSmoothingQuality: 'high' });
+    ctx.clearRect(0, 0, 640, 640);
+    ctx.drawImage(cc, 0, 0, 640, 640);
+    croppedImageData = canvas.toDataURL('image/jpeg');
+
+    cropContainer.style.display = 'none';
+    document.getElementById('cropDoneBadge').classList.add('visible');
+    updateSteps(3);
+  });
+
+  /* ── DATE FORMAT ── */
+  function formatDate(d) {
+    const [y, m, day] = d.split('-');
+    return `${day}/${m}/${y}`;
+  }
+
+  /* ── FORM SUBMIT ── */
+  document.getElementById('membershipForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+    if (!croppedImageData) {
+      alert('Please upload and crop your photo before submitting.');
+      return;
     }
 
-    memberIDInput.value = getUniqueMemberID();
+    document.getElementById('loading').classList.add('active');
 
-    let cropper;
-    const photoInput = document.getElementById("photoInput");
-    const imagePreview = document.getElementById("imagePreview");
-    const cropContainer = document.getElementById("cropContainer");
-    const cropBtn = document.getElementById("cropBtn");
-    let croppedImageData = null;
+    setTimeout(() => {
+      const fd = new FormData(this);
+      const bloodGroup = document.getElementById('bloodType').value + document.getElementById('rhFactor').value;
 
-    photoInput.addEventListener("change", function () {
-      const file = this.files[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = function (e) {
-          imagePreview.src = e.target.result;
-          cropContainer.style.display = "block";
-          if (cropper) cropper.destroy();
-          cropper = new Cropper(imagePreview, {
-            aspectRatio: 1,
-            viewMode: 1
+      const data = {
+        name:      fd.get('name'),
+        memberId:  fd.get('memberID'),
+        bloodGroup,
+        dob:       formatDate(fd.get('dob')),
+        mobile:    fd.get('phone'),
+        address:   fd.get('address'),
+        photo:     croppedImageData
+      };
+
+      const qrContent = `Name: ${data.name}\nID: ${data.memberId}\nPhone: ${data.mobile}`;
+      QRCode.toDataURL(qrContent)
+        .then(qrUrl => {
+          data.qrCode = qrUrl;
+          sessionStorage.setItem('formData', JSON.stringify(data));
+
+          fetch('https://script.google.com/macros/s/AKfycbzmBs_XiTHdmDrxGykJiaYNyn0Ntslm4CmXP0uQLANdR6yRCb7Y9yhlXjd0Di2VN_Rc/exec', {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+          }).then(() => {
+            window.location.href = 'SFC.html';
+          }).catch(err => {
+            console.error(err);
+            alert('Error submitting. Please try again.');
+            document.getElementById('loading').classList.remove('active');
           });
-        };
-        reader.readAsDataURL(file);
-      }
-    });
-
-    cropBtn.addEventListener("click", function () {
-      const canvas = document.getElementById("canvas");
-      const ctx = canvas.getContext("2d");
-
-      const croppedCanvas = cropper.getCroppedCanvas({
-        width: 640,
-        height: 640,
-        imageSmoothingQuality: "high"
-      });
-
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.drawImage(croppedCanvas, 0, 0, 640, 640);
-      croppedImageData = canvas.toDataURL("image/jpeg");
-
-      alert("Photo cropped and saved!");
-      cropContainer.style.display = "none";
-    });
-
-    function formatDate(isoDate) {
-      const [year, month, day] = isoDate.split("-");
-      return `${day}/${month}/${year}`;
-    }
-
-    document.getElementById("membershipForm").addEventListener("submit", function (e) {
-      e.preventDefault();
-
-      if (!croppedImageData) {
-        alert("Crop & upload your photo before submitting.");
-        return;
-      }
-
-      document.getElementById("loading").style.display = "flex";
-
-      setTimeout(() => {
-        const formData = new FormData(this);
-        const bloodType = document.getElementById("bloodType").value;
-        const rhFactor = document.getElementById("rhFactor").value;
-        const bloodGroup = bloodType + rhFactor;
-
-        const data = {
-          name: formData.get("name"),
-          memberId: formData.get("memberID"),
-          bloodGroup: bloodGroup,
-          dob: formatDate(formData.get("dob")),
-          mobile: formData.get("phone"),
-          address: formData.get("address"),
-          photo: croppedImageData
-        };
-
-        const qrContent = `Name: ${data.name}\nID: ${data.memberId}\nPhone: ${data.mobile}`;
-        QRCode.toDataURL(qrContent)
-          .then(qrUrl => {
-            data.qrCode = qrUrl;
-            sessionStorage.setItem("formData", JSON.stringify(data));
-
-            fetch('https://script.google.com/macros/s/AKfycbzmBs_XiTHdmDrxGykJiaYNyn0Ntslm4CmXP0uQLANdR6yRCb7Y9yhlXjd0Di2VN_Rc/exec', {
-              method: 'POST',
-              mode: 'no-cors',
-              headers: {
-                'Content-Type': 'application/json'
-              },
-              body: JSON.stringify(data)
-            }).then(() => {
-              window.location.href = "SFC.html";
-            }).catch(err => {
-              console.error('Error sending data', err);
-              alert("Error submitting the form.");
-              document.getElementById("loading").style.display = "none";
-            });
-          })
-          .catch(err => {
-            console.error("QR Code generation failed", err);
-            alert("Failed to generate QR code.");
-            document.getElementById("loading").style.display = "none";
-          });
-
-      }, 4000);
-    });
-  </script>
-
-  <div class="footer-credit">Coimbatore Suriya Fans Club © 2025</div>
+        })
+        .catch(err => {
+          console.error(err);
+          alert('QR Code generation failed.');
+          document.getElementById('loading').classList.remove('active');
+        });
+    }, 4000);
+  });
+</script>
 </body>
 </html>
-
-
