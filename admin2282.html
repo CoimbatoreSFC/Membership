@@ -197,7 +197,7 @@
       padding: 22px 16px 60px;
     }
 
-    /* ══ DASHBOARD STATS ══ */
+    /* ══ DASHBOARD ══ */
     .dashboard {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
@@ -214,7 +214,7 @@
     .dash-card::before {
       content: '';
       position: absolute; top: 0; left: 0; right: 0; height: 2px;
-      background: var(--accent, linear-gradient(90deg, var(--gold-dark), var(--gold)));
+      background: linear-gradient(90deg, var(--gold-dark), var(--gold));
     }
     .dash-card.green::before { background: linear-gradient(90deg, #166534, var(--green)); }
     .dash-card.blue::before  { background: linear-gradient(90deg, #1e40af, var(--blue)); }
@@ -232,9 +232,7 @@
     .dash-card.green .dash-val { color: var(--green); }
     .dash-card.blue  .dash-val { color: var(--blue); }
     .dash-card.red   .dash-val { color: var(--red); }
-    .dash-sub {
-      font-size: 11px; font-weight: 600; color: var(--muted);
-    }
+    .dash-sub { font-size: 11px; font-weight: 600; color: var(--muted); }
 
     /* ══ TABS ══ */
     .tabs {
@@ -251,8 +249,7 @@
       cursor: pointer; transition: all 0.2s; white-space: nowrap;
     }
     .tab-btn.active {
-      background: rgba(244,185,66,0.12);
-      color: var(--gold);
+      background: rgba(244,185,66,0.12); color: var(--gold);
       box-shadow: inset 0 0 0 1px rgba(244,185,66,0.25);
     }
     .tab-btn:hover:not(.active) { color: var(--text); }
@@ -313,7 +310,6 @@
       -webkit-tap-highlight-color: transparent;
     }
     .btn-export:hover { background: rgba(96,165,250,0.16); }
-
     .sort-wrap {
       display: flex; gap: 4px; align-items: center;
       background: var(--card); border: 1px solid var(--border);
@@ -376,17 +372,13 @@
       background: rgba(244,185,66,0.1); border: 1px solid rgba(244,185,66,0.2);
       border-radius: 6px; font-size: 12px; font-weight: 700; color: var(--gold);
     }
-    .td-copyable {
-      cursor: pointer; position: relative;
-      transition: color 0.15s;
-    }
+    .td-copyable { cursor: pointer; position: relative; transition: color 0.15s; }
     .td-copyable:hover { color: var(--gold); }
     .td-copyable:hover::after {
       content: '⧉ copy';
       position: absolute; right: 0; top: 50%; transform: translateY(-50%);
       font-size: 9px; color: rgba(244,185,66,0.5); letter-spacing: 0.05em;
     }
-
     .new-tag {
       display: inline-block; padding: 1px 6px;
       background: rgba(74,222,128,0.12); border: 1px solid rgba(74,222,128,0.25);
@@ -394,7 +386,6 @@
       color: var(--green); letter-spacing: 0.08em;
       margin-left: 5px; vertical-align: middle;
     }
-
     .btn-view {
       padding: 5px 12px;
       background: rgba(244,185,66,0.08); border: 1px solid rgba(244,185,66,0.22);
@@ -407,7 +398,7 @@
     }
     .btn-view:hover { background: rgba(244,185,66,0.2); border-color: var(--gold); }
 
-    /* ══ RECENT JOINERS PANEL ══ */
+    /* ══ PANELS ══ */
     #recentPanel { display: none; }
     #recentPanel.active { display: block; }
     #membersPanel { display: block; }
@@ -415,6 +406,7 @@
     #bloodPanel { display: none; }
     #bloodPanel.active { display: block; }
 
+    /* ══ RECENT JOINERS ══ */
     .recent-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
@@ -434,8 +426,7 @@
     }
     .recent-card:hover { border-color: rgba(244,185,66,0.35); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.4); }
     .recent-card::before {
-      content: '';
-      position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
       background: linear-gradient(90deg, var(--gold-dark), var(--gold));
     }
     .rc-rank {
@@ -444,31 +435,13 @@
       line-height: 1; min-width: 28px;
     }
     .rc-body { flex: 1; min-width: 0; }
-    .rc-name {
-      font-size: 14px; font-weight: 700; color: var(--text);
-      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-    }
-    .rc-id {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 13px; color: var(--gold); letter-spacing: 0.08em; margin-top: 2px;
-    }
-    .rc-meta {
-      margin-top: 8px; display: flex; gap: 8px; flex-wrap: wrap;
-    }
-    .rc-pill {
-      padding: 2px 8px; border-radius: 5px;
-      font-size: 10px; font-weight: 700; letter-spacing: 0.06em;
-    }
-    .rc-pill.blood {
-      background: rgba(244,185,66,0.1); border: 1px solid rgba(244,185,66,0.2); color: var(--gold);
-    }
-    .rc-pill.mobile {
-      background: rgba(96,165,250,0.08); border: 1px solid rgba(96,165,250,0.18); color: var(--blue);
-    }
-    .rc-time {
-      font-size: 10px; color: var(--muted); margin-top: 6px;
-      letter-spacing: 0.04em;
-    }
+    .rc-name { font-size: 14px; font-weight: 700; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .rc-id { font-family: 'Bebas Neue', sans-serif; font-size: 13px; color: var(--gold); letter-spacing: 0.08em; margin-top: 2px; }
+    .rc-meta { margin-top: 8px; display: flex; gap: 8px; flex-wrap: wrap; }
+    .rc-pill { padding: 2px 8px; border-radius: 5px; font-size: 10px; font-weight: 700; letter-spacing: 0.06em; }
+    .rc-pill.blood { background: rgba(244,185,66,0.1); border: 1px solid rgba(244,185,66,0.2); color: var(--gold); }
+    .rc-pill.mobile { background: rgba(96,165,250,0.08); border: 1px solid rgba(96,165,250,0.18); color: var(--blue); }
+    .rc-time { font-size: 10px; color: var(--muted); margin-top: 6px; letter-spacing: 0.04em; }
     .rc-new-badge {
       position: absolute; top: 12px; right: 12px;
       padding: 2px 8px; border-radius: 5px;
@@ -476,7 +449,7 @@
       font-size: 9px; font-weight: 700; color: var(--green); letter-spacing: 0.1em;
     }
 
-    /* ══ BLOOD GROUP PANEL ══ */
+    /* ══ BLOOD GROUP ══ */
     .blood-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
@@ -485,28 +458,15 @@
     .blood-card {
       background: var(--card); border: 1px solid var(--border);
       border-radius: 14px; padding: 20px 18px;
-      text-align: center; cursor: pointer;
-      transition: all 0.2s;
+      text-align: center; cursor: pointer; transition: all 0.2s;
       animation: fadeSlide 0.3s ease both;
     }
     .blood-card:hover { border-color: rgba(244,185,66,0.4); transform: translateY(-2px); }
-    .blood-type {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 2.4rem; color: var(--gold); letter-spacing: 0.08em;
-    }
-    .blood-count {
-      font-size: 13px; font-weight: 700; color: var(--text); margin-top: 4px;
-    }
+    .blood-type { font-family: 'Bebas Neue', sans-serif; font-size: 2.4rem; color: var(--gold); letter-spacing: 0.08em; }
+    .blood-count { font-size: 13px; font-weight: 700; color: var(--text); margin-top: 4px; }
     .blood-count span { color: var(--muted); font-size: 11px; }
-    .blood-bar-wrap {
-      margin-top: 10px; background: rgba(255,255,255,0.05);
-      border-radius: 4px; height: 4px; overflow: hidden;
-    }
-    .blood-bar {
-      height: 100%; border-radius: 4px;
-      background: linear-gradient(90deg, var(--gold-dark), var(--gold));
-      transition: width 0.8s ease;
-    }
+    .blood-bar-wrap { margin-top: 10px; background: rgba(255,255,255,0.05); border-radius: 4px; height: 4px; overflow: hidden; }
+    .blood-bar { height: 100%; border-radius: 4px; background: linear-gradient(90deg, var(--gold-dark), var(--gold)); transition: width 0.8s ease; }
 
     /* STATE */
     .state-msg {
@@ -545,7 +505,6 @@
     #modalOverlay.open .modal-inner { transform: translateY(0); }
 
     .id-card-col { display: flex; flex-direction: column; align-items: center; gap: 12px; }
-
     .id-card {
       position: relative;
       width: min(295px, 82vw);
@@ -554,10 +513,7 @@
       overflow: hidden; border-radius: 14px;
       box-shadow: 0 0 50px rgba(220,20,60,0.35), 0 0 0 1px rgba(220,20,60,0.12);
     }
-    .id-card .card-bg {
-      position: absolute; top: 0; left: 0;
-      width: 100%; height: 100%; object-fit: cover; z-index: 1;
-    }
+    .id-card .card-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 1; }
     .id-card .profile-pic {
       position: absolute; top: 24%; left: 5%;
       width: 28%; aspect-ratio: 11/13;
@@ -569,8 +525,7 @@
       width: 158px; z-index: 2; color: #FFFAC2; text-align: center;
     }
     .id-card .member-name {
-      font-size: 1.0em; color: #FFDB29;
-      font-weight: bold; text-transform: uppercase;
+      font-size: 1.0em; color: #FFDB29; font-weight: bold; text-transform: uppercase;
       overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
     }
     .id-card .hashtag { font-size: 0.8em; color: #FFFAC2; margin-top: 4px; }
@@ -606,22 +561,15 @@
       border-bottom: 1px solid var(--border2); padding-bottom: 10px;
     }
     .info-row { display: flex; flex-direction: column; gap: 3px; }
-    .info-lbl {
-      font-size: 10px; font-weight: 700;
-      letter-spacing: 0.2em; text-transform: uppercase; color: rgba(244,185,66,0.5);
-    }
-    .info-val {
-      font-size: 14px; font-weight: 600; color: var(--text); word-break: break-all;
-      cursor: pointer; transition: color 0.15s;
-    }
+    .info-lbl { font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(244,185,66,0.5); }
+    .info-val { font-size: 14px; font-weight: 600; color: var(--text); word-break: break-all; cursor: pointer; transition: color 0.15s; }
     .info-val:hover { color: var(--gold); }
 
     .btn-drive {
       width: 100%; padding: 10px;
       background: rgba(244,185,66,0.06); border: 1px solid rgba(244,185,66,0.18);
       border-radius: 10px; color: rgba(244,185,66,0.7);
-      font-family: 'Rajdhani', sans-serif;
-      font-size: 12px; font-weight: 700;
+      font-family: 'Rajdhani', sans-serif; font-size: 12px; font-weight: 700;
       letter-spacing: 0.1em; text-transform: uppercase;
       cursor: pointer; transition: all 0.2s; text-decoration: none;
       display: block; text-align: center;
@@ -641,46 +589,27 @@
       width: 100%; padding: 11px;
       background: transparent; border: 1px solid rgba(244,185,66,0.2);
       border-radius: 12px; color: rgba(244,185,66,0.55);
-      font-family: 'Rajdhani', sans-serif;
-      font-size: 13px; font-weight: 700;
+      font-family: 'Rajdhani', sans-serif; font-size: 13px; font-weight: 700;
       letter-spacing: 0.12em; text-transform: uppercase;
       cursor: pointer; transition: all 0.2s;
     }
     .btn-close-m:hover { border-color: rgba(244,185,66,0.5); color: var(--gold); }
 
-    .photo-note {
-      font-size: 11px; color: var(--muted); font-weight: 600;
-      letter-spacing: 0.04em; text-align: center; line-height: 1.55;
-    }
+    .photo-note { font-size: 11px; color: var(--muted); font-weight: 600; letter-spacing: 0.04em; text-align: center; line-height: 1.55; }
 
-    /* SECTION HEADER */
-    .section-hdr {
-      display: flex; align-items: center; justify-content: space-between;
-      margin-bottom: 14px; flex-wrap: wrap; gap: 8px;
-    }
-    .section-title {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.1rem; letter-spacing: 0.15em; color: var(--gold);
-    }
-    .section-count {
-      font-size: 11px; font-weight: 700; color: var(--muted);
-      letter-spacing: 0.1em;
-    }
+    .section-hdr { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; flex-wrap: wrap; gap: 8px; }
+    .section-title { font-family: 'Bebas Neue', sans-serif; font-size: 1.1rem; letter-spacing: 0.15em; color: var(--gold); }
+    .section-count { font-size: 11px; font-weight: 700; color: var(--muted); letter-spacing: 0.1em; }
 
-    /* FOOTER */
     .footer { text-align: center; margin-top: 28px; }
-    .footer-text {
-      font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
-      color: rgba(255,255,255,0.07); font-weight: 700;
-    }
+    .footer-text { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,0.07); font-weight: 700; }
 
     /* TOAST */
     #toast {
       position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(80px);
       padding: 11px 22px;
       background: var(--card2); border: 1px solid var(--border);
-      border-radius: 12px;
-      font-size: 13px; font-weight: 700; letter-spacing: 0.08em;
+      border-radius: 12px; font-size: 13px; font-weight: 700; letter-spacing: 0.08em;
       color: var(--text); z-index: 9999;
       transition: transform 0.3s ease; white-space: nowrap;
       box-shadow: 0 4px 24px rgba(0,0,0,0.6); pointer-events: none;
@@ -728,8 +657,7 @@
   <div class="modal-inner">
     <div class="id-card-col">
       <div class="id-card" id="captureArea">
-        <img src="bg1.png" class="card-bg" alt=""
-             onerror="this.style.background='linear-gradient(160deg,#1a0000,#000)'">
+        <img src="bg1.png" class="card-bg" alt="" onerror="this.style.background='linear-gradient(160deg,#1a0000,#000)'">
         <img id="mPhoto" class="profile-pic" alt="Photo" crossorigin="anonymous" onerror="this.style.opacity='0.3'">
         <div class="name-hashtag">
           <div id="mName" class="member-name"></div>
@@ -753,11 +681,11 @@
 
     <div class="modal-info">
       <div class="modal-info-title">Member Details</div>
-      <div class="info-row"><div class="info-lbl">Full Name</div><div class="info-val" id="iName" onclick="copyText(this.textContent)"></div></div>
-      <div class="info-row"><div class="info-lbl">Member ID</div><div class="info-val" id="iID" onclick="copyText(this.textContent)"></div></div>
+      <div class="info-row"><div class="info-lbl">Full Name</div><div class="info-val" id="iName" onclick="copyText(this.textContent)" title="Click to copy"></div></div>
+      <div class="info-row"><div class="info-lbl">Member ID</div><div class="info-val" id="iID" onclick="copyText(this.textContent)" title="Click to copy"></div></div>
       <div class="info-row"><div class="info-lbl">Date of Birth</div><div class="info-val" id="iDOB"></div></div>
       <div class="info-row"><div class="info-lbl">Blood Group</div><div class="info-val" id="iBlood"></div></div>
-      <div class="info-row"><div class="info-lbl">Mobile</div><div class="info-val" id="iPhone" onclick="copyText(this.textContent)"></div></div>
+      <div class="info-row"><div class="info-lbl">Mobile</div><div class="info-val" id="iPhone" onclick="copyText(this.textContent)" title="Click to copy"></div></div>
       <div class="info-row"><div class="info-lbl">Address</div><div class="info-val" id="iAddress"></div></div>
       <div class="info-row"><div class="info-lbl">Joined</div><div class="info-val" id="iJoined"></div></div>
       <a id="photoLink" href="#" target="_blank" rel="noopener" class="btn-drive">↗ Open Photo in Drive</a>
@@ -812,9 +740,9 @@
 
   <!-- TABS -->
   <div class="tabs" id="tabsRow" style="display:none;">
-    <button class="tab-btn active" onclick="switchTab('members')">👥 All Members</button>
-    <button class="tab-btn" onclick="switchTab('recent')">🆕 Recent Joiners</button>
-    <button class="tab-btn" onclick="switchTab('blood')">🩸 By Blood Group</button>
+    <button class="tab-btn active" onclick="switchTab('members', this)">👥 All Members</button>
+    <button class="tab-btn" onclick="switchTab('recent', this)">🆕 Recent Joiners</button>
+    <button class="tab-btn" onclick="switchTab('blood', this)">🩸 By Blood Group</button>
   </div>
 
   <!-- MEMBERS TAB -->
@@ -829,14 +757,12 @@
         <option value="">All Blood Groups</option>
       </select>
       <div class="sort-wrap">
-        <button class="sort-btn active" onclick="setSort('id',this)">ID</button>
-        <button class="sort-btn" onclick="setSort('name',this)">Name</button>
-        <button class="sort-btn" onclick="setSort('newest',this)">Newest</button>
+        <button class="sort-btn active" onclick="setSort('id', this)">ID</button>
+        <button class="sort-btn" onclick="setSort('name', this)">Name</button>
+        <button class="sort-btn" onclick="setSort('newest', this)">Newest</button>
       </div>
-      <button class="btn-export" onclick="exportCSV()">
-        ↓ CSV
-      </button>
-      <button class="btn-refresh" id="refreshBtn" onclick="loadData()">
+      <button class="btn-export" onclick="exportCSV()">↓ CSV</button>
+      <button class="btn-refresh" onclick="loadData()">
         <svg id="rIcon" width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
           <path d="M17.65 6.35A7.958 7.958 0 0012 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08A5.99 5.99 0 0112 18c-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/>
         </svg>
@@ -887,19 +813,53 @@
 
 <script>
 /* ══════════════════════════════════════════════════
-   CONFIGURATION
+   CONFIGURATION  ← change these two values
 ══════════════════════════════════════════════════ */
 const ADMIN_PASSWORD = "cbesfc2025";
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzmBs_XiTHdmDrxGykJiaYNyn0Ntslm4CmXP0uQLANdR6yRCb7Y9yhlXjd0Di2VN_Rc/exec";
+const SCRIPT_URL     = "https://script.google.com/macros/s/AKfycbzmBs_XiTHdmDrxGykJiaYNyn0Ntslm4CmXP0uQLANdR6yRCb7Y9yhlXjd0Di2VN_Rc/exec";
 /* ══════════════════════════════════════════════════ */
 
-/* HELPERS */
+/* ── DRIVE URL HELPERS ── */
+function extractDriveId(val) {
+  if (!val) return null;
+  val = String(val).trim();
+  // Raw file ID — no slashes, no http
+  if (!val.includes('/') && !val.includes('http')) return val;
+  // Handles:
+  //   https://drive.google.com/file/d/FILE_ID/view?usp=drivesdk
+  //   https://drive.google.com/open?id=FILE_ID
+  //   https://drive.google.com/thumbnail?id=FILE_ID
+  const patterns = [
+    /\/file\/d\/([a-zA-Z0-9_-]{20,})/,
+    /\/d\/([a-zA-Z0-9_-]{20,})/,
+    /[?&]id=([a-zA-Z0-9_-]{20,})/,
+  ];
+  for (const p of patterns) {
+    const m = val.match(p);
+    if (m) return m[1];
+  }
+  return val; // fallback
+}
+
+function driveThumb(val) {
+  const id = extractDriveId(val);
+  if (!id) return '';
+  return `https://drive.google.com/thumbnail?id=${id}&sz=w400`;
+}
+
+function driveView(val) {
+  const id = extractDriveId(val);
+  if (!id) return '#';
+  return `https://drive.google.com/file/d/${id}/view`;
+}
+
+/* ── DATE HELPERS ── */
 function formatDate(val) {
   if (!val) return '—';
   const d = new Date(val);
   if (isNaN(d)) return String(val);
-  const dd = String(d.getDate()).padStart(2, '0');
-  const mm = String(d.getMonth() + 1).padStart(2, '0');
+  const dd   = String(d.getDate()).padStart(2, '0');
+  const mm   = String(d.getMonth() + 1).padStart(2, '0');
   const yyyy = d.getFullYear();
   return `${dd}-${mm}-${yyyy}`;
 }
@@ -912,10 +872,10 @@ function timeAgo(val) {
   const mins = Math.floor(diff / 60000);
   const hrs  = Math.floor(diff / 3600000);
   const days = Math.floor(diff / 86400000);
-  if (mins < 1)   return 'Just now';
-  if (mins < 60)  return `${mins}m ago`;
-  if (hrs  < 24)  return `${hrs}h ago`;
-  if (days < 7)   return `${days}d ago`;
+  if (mins < 1)  return 'Just now';
+  if (mins < 60) return `${mins}m ago`;
+  if (hrs  < 24) return `${hrs}h ago`;
+  if (days < 7)  return `${days}d ago`;
   return formatDate(val);
 }
 
@@ -928,27 +888,17 @@ function isWithinDays(val, n) {
 
 function isToday(val) {
   if (!val) return false;
-  const d = new Date(val);
-  if (isNaN(d)) return false;
+  const d   = new Date(val);
   const now = new Date();
-  return d.getDate() === now.getDate() &&
-         d.getMonth() === now.getMonth() &&
+  if (isNaN(d)) return false;
+  return d.getDate()     === now.getDate() &&
+         d.getMonth()    === now.getMonth() &&
          d.getFullYear() === now.getFullYear();
 }
 
-function driveThumb(id) {
-  if (!id) return '';
-  if (id.startsWith('http') || id.startsWith('data:')) return id;
-  return `https://drive.google.com/thumbnail?id=${id}&sz=w400`;
-}
-function driveView(id) {
-  if (!id) return '#';
-  if (id.startsWith('http')) return id;
-  return `https://drive.google.com/file/d/${id}/view`;
-}
-
+/* ── MISC HELPERS ── */
 function esc(s) {
-  return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  return String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 }
 
 function copyText(text) {
@@ -956,8 +906,8 @@ function copyText(text) {
   navigator.clipboard.writeText(text).then(() => showToast('✓ Copied: ' + text));
 }
 
-/* PARTICLES */
-(function() {
+/* ── PARTICLES ── */
+(function () {
   const w = document.getElementById('particles');
   const n = window.innerWidth < 480 ? 10 : 20;
   for (let i = 0; i < n; i++) {
@@ -969,13 +919,13 @@ function copyText(text) {
   }
 })();
 
-/* SCROLL */
+/* ── SCROLL BAR ── */
 window.addEventListener('scroll', () => {
   const d = document.documentElement.scrollHeight - window.innerHeight;
-  document.getElementById('scrollBar').style.width = (d > 0 ? (scrollY/d)*100 : 0) + '%';
+  document.getElementById('scrollBar').style.width = (d > 0 ? (scrollY / d) * 100 : 0) + '%';
 }, { passive: true });
 
-/* PASSWORD */
+/* ── PASSWORD ── */
 function checkPassword() {
   const v = document.getElementById('pwInput').value;
   if (v === ADMIN_PASSWORD) {
@@ -998,22 +948,21 @@ function logout() {
   allMembers = []; filteredMembers = [];
   document.getElementById('tableBody').innerHTML =
     '<div class="state-msg"><span class="ico">🔒</span>Unlock to view membership data</div>';
-  document.getElementById('statTotal').textContent = '—';
+  document.getElementById('statTotal').textContent   = '—';
   document.getElementById('statShowing').textContent = '—';
   document.getElementById('dashboard').style.display = 'none';
-  document.getElementById('tabsRow').style.display = 'none';
+  document.getElementById('tabsRow').style.display   = 'none';
 }
 
-/* DATA */
-let allMembers = [], filteredMembers = [], currentMember = null;
-let currentSort = 'id';
+/* ── DATA ── */
+let allMembers = [], filteredMembers = [], currentMember = null, currentSort = 'id';
 
 async function loadData() {
   const icon = document.getElementById('rIcon');
   icon.classList.add('spin');
   showState('loading');
   try {
-    const res = await fetch(SCRIPT_URL + '?action=get&nocache=' + Date.now());
+    const res  = await fetch(SCRIPT_URL + '?action=get&nocache=' + Date.now());
     if (!res.ok) throw new Error('HTTP ' + res.status);
     const json = await res.json();
     if (!json.success) throw new Error(json.error || 'Script returned failure');
@@ -1021,9 +970,9 @@ async function loadData() {
     populateBloodFilter();
     filterTable();
     updateDashboard();
-    document.getElementById('statTotal').textContent = allMembers.length;
+    document.getElementById('statTotal').textContent   = allMembers.length;
     document.getElementById('dashboard').style.display = 'grid';
-    document.getElementById('tabsRow').style.display = 'flex';
+    document.getElementById('tabsRow').style.display   = 'flex';
     showToast('✓ Loaded ' + allMembers.length + ' member' + (allMembers.length !== 1 ? 's' : ''));
   } catch (err) {
     console.error(err);
@@ -1032,7 +981,7 @@ async function loadData() {
   icon.classList.remove('spin');
 }
 
-/* DASHBOARD */
+/* ── DASHBOARD ── */
 function updateDashboard() {
   document.getElementById('dTotal').textContent = allMembers.length;
   document.getElementById('dToday').textContent = allMembers.filter(m => isToday(m.timestamp)).length;
@@ -1041,20 +990,18 @@ function updateDashboard() {
   document.getElementById('dBlood').textContent = uniqueBloods.size;
 }
 
-/* TABS */
-function switchTab(tab) {
+/* ── TABS ── */
+function switchTab(tab, btn) {
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-  event.target.classList.add('active');
-
+  btn.classList.add('active');
   document.getElementById('membersPanel').classList.toggle('hidden', tab !== 'members');
-  document.getElementById('recentPanel').classList.toggle('active', tab === 'recent');
-  document.getElementById('bloodPanel').classList.toggle('active', tab === 'blood');
-
+  document.getElementById('recentPanel').classList.toggle('active',  tab === 'recent');
+  document.getElementById('bloodPanel').classList.toggle('active',   tab === 'blood');
   if (tab === 'recent') renderRecent();
   if (tab === 'blood')  renderBlood();
 }
 
-/* SORT */
+/* ── SORT ── */
 function setSort(s, el) {
   currentSort = s;
   document.querySelectorAll('.sort-btn').forEach(b => b.classList.remove('active'));
@@ -1064,14 +1011,14 @@ function setSort(s, el) {
 
 function sortedMembers(arr) {
   const copy = [...arr];
-  if (currentSort === 'name')   return copy.sort((a,b) => (a.name||'').localeCompare(b.name||''));
-  if (currentSort === 'newest') return copy.sort((a,b) => new Date(b.timestamp||0) - new Date(a.timestamp||0));
-  return copy.sort((a,b) => (a.memberId||'').localeCompare(b.memberId||''));
+  if (currentSort === 'name')   return copy.sort((a, b) => (a.name || '').localeCompare(b.name || ''));
+  if (currentSort === 'newest') return copy.sort((a, b) => new Date(b.timestamp || 0) - new Date(a.timestamp || 0));
+  return copy.sort((a, b) => (a.memberId || '').localeCompare(b.memberId || ''));
 }
 
-/* FILTER */
+/* ── FILTER ── */
 function populateBloodFilter() {
-  const sel = document.getElementById('bloodFilter');
+  const sel  = document.getElementById('bloodFilter');
   const have = new Set(Array.from(sel.options).map(o => o.value));
   [...new Set(allMembers.map(m => m.bloodGroup).filter(Boolean))].sort().forEach(g => {
     if (!have.has(g)) {
@@ -1085,9 +1032,9 @@ function filterTable() {
   const q = document.getElementById('searchInput').value.toLowerCase();
   const b = document.getElementById('bloodFilter').value;
   filteredMembers = allMembers.filter(m =>
-    (!q || (m.name||'').toLowerCase().includes(q) ||
-           (m.memberId||'').toLowerCase().includes(q) ||
-           (m.mobile||'').includes(q)) &&
+    (!q || (m.name     || '').toLowerCase().includes(q) ||
+           (m.memberId || '').toLowerCase().includes(q) ||
+           (m.mobile   || '').includes(q)) &&
     (!b || m.bloodGroup === b)
   );
   filteredMembers = sortedMembers(filteredMembers);
@@ -1095,24 +1042,23 @@ function filterTable() {
   renderTable();
 }
 
-/* RENDER TABLE */
+/* ── TABLE ── */
 function renderTable() {
   const body = document.getElementById('tableBody');
   if (!filteredMembers.length) {
     body.innerHTML = '<div class="state-msg"><span class="ico">🔍</span>No members match your search</div>';
     return;
   }
-  const today7 = (m) => isWithinDays(m.timestamp, 7);
   body.innerHTML = filteredMembers.map((m, i) => {
-    const oi = allMembers.indexOf(m);
-    const isNew = today7(m);
+    const oi    = allMembers.indexOf(m);
+    const isNew = isWithinDays(m.timestamp, 7);
     return `
-    <div class="tbl-row${isNew?' new-badge':''}" onclick="openModal(${oi})">
+    <div class="tbl-row${isNew ? ' new-badge' : ''}" onclick="openModal(${oi})">
       <div class="td td-num">${i + 1}</div>
       <div class="td td-id">${esc(m.memberId)}</div>
-      <div class="td">${esc(m.name)}${isNew?'<span class="new-tag">NEW</span>':''}</div>
-      <div class="td"><span class="td-blood">${esc(m.bloodGroup)||'—'}</span></div>
-      <div class="td td-copyable" onclick="event.stopPropagation();copyText('${esc(m.mobile)}')">${esc(m.mobile)||'—'}</div>
+      <div class="td">${esc(m.name)}${isNew ? '<span class="new-tag">NEW</span>' : ''}</div>
+      <div class="td"><span class="td-blood">${esc(m.bloodGroup) || '—'}</span></div>
+      <div class="td td-copyable" onclick="event.stopPropagation();copyText('${esc(m.mobile)}')">${esc(m.mobile) || '—'}</div>
       <div class="td">${formatDate(m.dob)}</div>
       <div class="td">
         <button class="btn-view" onclick="event.stopPropagation();openModal(${oi})">View</button>
@@ -1121,9 +1067,9 @@ function renderTable() {
   }).join('');
 }
 
-/* RECENT JOINERS */
+/* ── RECENT JOINERS ── */
 function renderRecent() {
-  const sorted = [...allMembers].sort((a,b) => new Date(b.timestamp||0) - new Date(a.timestamp||0));
+  const sorted = [...allMembers].sort((a, b) => new Date(b.timestamp || 0) - new Date(a.timestamp || 0));
   const recent = sorted.slice(0, 20);
   document.getElementById('recentCount').textContent = `Showing latest ${recent.length} of ${allMembers.length}`;
   if (!recent.length) {
@@ -1131,17 +1077,17 @@ function renderRecent() {
     return;
   }
   document.getElementById('recentGrid').innerHTML = recent.map((m, i) => {
-    const oi = allMembers.indexOf(m);
+    const oi    = allMembers.indexOf(m);
     const isNew = isWithinDays(m.timestamp, 1);
     return `
-    <div class="recent-card" onclick="openModal(${oi})" style="animation-delay:${i*0.04}s">
-      <div class="rc-rank">${String(i+1).padStart(2,'0')}</div>
+    <div class="recent-card" onclick="openModal(${oi})" style="animation-delay:${i * 0.04}s">
+      <div class="rc-rank">${String(i + 1).padStart(2, '0')}</div>
       <div class="rc-body">
         <div class="rc-name">${esc(m.name)}</div>
         <div class="rc-id">${esc(m.memberId)}</div>
         <div class="rc-meta">
           ${m.bloodGroup ? `<span class="rc-pill blood">${esc(m.bloodGroup)}</span>` : ''}
-          ${m.mobile ? `<span class="rc-pill mobile">${esc(m.mobile)}</span>` : ''}
+          ${m.mobile     ? `<span class="rc-pill mobile">${esc(m.mobile)}</span>`    : ''}
         </div>
         <div class="rc-time">${m.timestamp ? timeAgo(m.timestamp) : 'Date unknown'}</div>
       </div>
@@ -1150,41 +1096,40 @@ function renderRecent() {
   }).join('');
 }
 
-/* BLOOD GROUP PANEL */
+/* ── BLOOD GROUP ── */
 function renderBlood() {
   const counts = {};
   allMembers.forEach(m => {
     const g = m.bloodGroup || 'Unknown';
     counts[g] = (counts[g] || 0) + 1;
   });
-  const max = Math.max(...Object.values(counts));
-  const sorted = Object.entries(counts).sort((a,b) => b[1]-a[1]);
+  const max    = Math.max(...Object.values(counts));
+  const sorted = Object.entries(counts).sort((a, b) => b[1] - a[1]);
   document.getElementById('bloodCount').textContent = `${sorted.length} blood groups · ${allMembers.length} total members`;
-
   document.getElementById('bloodGrid').innerHTML = sorted.map(([g, count], i) => {
-    const pct = Math.round((count / allMembers.length) * 100);
+    const pct  = Math.round((count / allMembers.length) * 100);
     const barW = Math.round((count / max) * 100);
     return `
-    <div class="blood-card" onclick="filterByBlood('${g}')" style="animation-delay:${i*0.06}s">
+    <div class="blood-card" onclick="filterByBlood('${esc(g)}')" style="animation-delay:${i * 0.06}s">
       <div class="blood-type">${esc(g)}</div>
       <div class="blood-count">${count} <span>members (${pct}%)</span></div>
-      <div class="blood-bar-wrap">
-        <div class="blood-bar" style="width:${barW}%"></div>
-      </div>
+      <div class="blood-bar-wrap"><div class="blood-bar" style="width:${barW}%"></div></div>
     </div>`;
   }).join('');
 }
 
 function filterByBlood(group) {
-  switchTab('members');
-  document.querySelectorAll('.tab-btn')[0].classList.add('active');
-  document.querySelectorAll('.tab-btn').forEach((b,i) => { if(i!==0) b.classList.remove('active'); });
+  const tabs = document.querySelectorAll('.tab-btn');
+  tabs.forEach((b, i) => b.classList.toggle('active', i === 0));
+  document.getElementById('membersPanel').classList.remove('hidden');
+  document.getElementById('recentPanel').classList.remove('active');
+  document.getElementById('bloodPanel').classList.remove('active');
   document.getElementById('bloodFilter').value = group;
   filterTable();
   showToast(`Filtered: ${group} — ${filteredMembers.length} member(s)`);
 }
 
-/* STATE */
+/* ── STATE ── */
 function showState(type, msg) {
   const body = document.getElementById('tableBody');
   if (type === 'loading') {
@@ -1194,35 +1139,37 @@ function showState(type, msg) {
   }
 }
 
-/* CSV EXPORT */
+/* ── CSV EXPORT ── */
 function exportCSV() {
   if (!allMembers.length) { showToast('⚠ No data to export'); return; }
-  const headers = ['Member ID','Name','Blood Group','Mobile','DOB','Address'];
-  const rows = filteredMembers.map(m => [
-    m.memberId, m.name, m.bloodGroup, m.mobile, formatDate(m.dob), m.address
-  ].map(v => `"${String(v||'').replace(/"/g,'""')}"`).join(','));
+  const headers = ['Member ID', 'Name', 'Blood Group', 'Mobile', 'DOB', 'Address'];
+  const rows = filteredMembers.map(m =>
+    [m.memberId, m.name, m.bloodGroup, m.mobile, formatDate(m.dob), m.address]
+    .map(v => `"${String(v || '').replace(/"/g, '""')}"`)
+    .join(',')
+  );
   const csv = [headers.join(','), ...rows].join('\n');
-  const a = document.createElement('a');
-  a.href = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv);
-  a.download = `CBE_SFC_Members_${new Date().toISOString().slice(0,10)}.csv`;
+  const a   = document.createElement('a');
+  a.href     = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv);
+  a.download = `CBE_SFC_Members_${new Date().toISOString().slice(0, 10)}.csv`;
   a.click();
   showToast(`✓ Exported ${filteredMembers.length} members`);
 }
 
-/* MODAL */
+/* ── MODAL ── */
 function openModal(idx) {
   const m = allMembers[idx];
   if (!m) return;
   currentMember = m;
 
-  document.getElementById('mPhoto').src       = driveThumb(m.photoId);
-  document.getElementById('mName').textContent    = (m.name||'').toUpperCase();
-  document.getElementById('mID').textContent      = m.memberId;
-  document.getElementById('mBlood').textContent   = m.bloodGroup;
-  document.getElementById('mDOB').textContent     = formatDate(m.dob);
-  document.getElementById('mPhone').textContent   = m.mobile;
+  document.getElementById('mPhoto').src          = driveThumb(m.photoId);
+  document.getElementById('mName').textContent   = (m.name || '').toUpperCase();
+  document.getElementById('mID').textContent     = m.memberId;
+  document.getElementById('mBlood').textContent  = m.bloodGroup;
+  document.getElementById('mDOB').textContent    = formatDate(m.dob);
+  document.getElementById('mPhone').textContent  = m.mobile;
   document.getElementById('mAddress').textContent = m.address;
-  document.getElementById('mQR').src              = driveThumb(m.qrId);
+  document.getElementById('mQR').src             = driveThumb(m.qrId);
 
   document.getElementById('iName').textContent    = m.name;
   document.getElementById('iID').textContent      = m.memberId;
@@ -1230,8 +1177,9 @@ function openModal(idx) {
   document.getElementById('iBlood').textContent   = m.bloodGroup;
   document.getElementById('iPhone').textContent   = m.mobile;
   document.getElementById('iAddress').textContent = m.address;
-  document.getElementById('iJoined').textContent  = m.timestamp ? timeAgo(m.timestamp) + ' · ' + formatDate(m.timestamp) : '—';
-  document.getElementById('photoLink').href        = driveView(m.photoId);
+  document.getElementById('iJoined').textContent  = m.timestamp
+    ? timeAgo(m.timestamp) + ' · ' + formatDate(m.timestamp) : '—';
+  document.getElementById('photoLink').href       = driveView(m.photoId);
 
   document.getElementById('modalOverlay').classList.add('open');
   document.body.style.overflow = 'hidden';
@@ -1246,33 +1194,36 @@ document.getElementById('modalOverlay').addEventListener('click', e => {
 });
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 
-/* DOWNLOAD */
+/* ── DOWNLOAD CARD ── */
 function downloadCard() {
   const btn = document.getElementById('dlBtn');
-  btn.disabled = true; btn.textContent = 'Generating…';
+  btn.disabled    = true;
+  btn.textContent = 'Generating…';
   showToast('Rendering card…');
   html2canvas(document.getElementById('captureArea'), {
     scale: 2.5, useCORS: true, allowTaint: true, logging: false
   }).then(canvas => {
     const id = currentMember ? currentMember.memberId : 'SFC_Member';
-    const a = document.createElement('a');
+    const a  = document.createElement('a');
     a.download = `Coimbatore_SFC_${id}.png`;
-    a.href = canvas.toDataURL('image/png');
+    a.href     = canvas.toDataURL('image/png');
     a.click();
     showToast('✓ Card downloaded!');
   }).catch(err => {
     console.error(err);
     showToast('⚠ Try "Open Photo in Drive" first to authorise');
   }).finally(() => {
-    btn.disabled = false; btn.textContent = '⬇ Download ID Card';
+    btn.disabled    = false;
+    btn.textContent = '⬇ Download ID Card';
   });
 }
 
-/* TOAST */
+/* ── TOAST ── */
 let toastT;
 function showToast(msg) {
   const t = document.getElementById('toast');
-  t.textContent = msg; t.classList.add('show');
+  t.textContent = msg;
+  t.classList.add('show');
   clearTimeout(toastT);
   toastT = setTimeout(() => t.classList.remove('show'), 3200);
 }
