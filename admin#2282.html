@@ -23,6 +23,7 @@
       --muted: #555;
       --green: #4ade80;
       --red: #ef4444;
+      --blue: #60a5fa;
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -45,7 +46,6 @@
       pointer-events: none; z-index: 0;
     }
 
-    /* SCROLL BAR */
     #scrollBar {
       position: fixed; top: 0; left: 0; height: 2px;
       background: linear-gradient(90deg, #C9921A, #F4B942);
@@ -53,7 +53,6 @@
       transition: width 0.08s linear;
     }
 
-    /* PARTICLES */
     #particles { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
     .particle {
       position: absolute; border-radius: 50%;
@@ -198,7 +197,67 @@
       padding: 22px 16px 60px;
     }
 
-    /* TOOLBAR */
+    /* ══ DASHBOARD STATS ══ */
+    .dashboard {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 12px; margin-bottom: 20px;
+    }
+    .dash-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 14px; padding: 16px 18px;
+      display: flex; flex-direction: column; gap: 6px;
+      position: relative; overflow: hidden;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .dash-card:hover { border-color: rgba(244,185,66,0.35); transform: translateY(-2px); }
+    .dash-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: var(--accent, linear-gradient(90deg, var(--gold-dark), var(--gold)));
+    }
+    .dash-card.green::before { background: linear-gradient(90deg, #166534, var(--green)); }
+    .dash-card.blue::before  { background: linear-gradient(90deg, #1e40af, var(--blue)); }
+    .dash-card.red::before   { background: linear-gradient(90deg, #7f1d1d, var(--red)); }
+    .dash-label {
+      font-size: 10px; font-weight: 700;
+      letter-spacing: 0.22em; text-transform: uppercase;
+      color: rgba(244,185,66,0.45);
+    }
+    .dash-val {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2rem; letter-spacing: 0.05em; color: var(--gold);
+      line-height: 1;
+    }
+    .dash-card.green .dash-val { color: var(--green); }
+    .dash-card.blue  .dash-val { color: var(--blue); }
+    .dash-card.red   .dash-val { color: var(--red); }
+    .dash-sub {
+      font-size: 11px; font-weight: 600; color: var(--muted);
+    }
+
+    /* ══ TABS ══ */
+    .tabs {
+      display: flex; gap: 4px; margin-bottom: 16px;
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 12px; padding: 4px; width: fit-content;
+    }
+    .tab-btn {
+      padding: 8px 18px;
+      background: transparent; border: none; border-radius: 9px;
+      color: var(--muted); font-family: 'Rajdhani', sans-serif;
+      font-size: 13px; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      cursor: pointer; transition: all 0.2s; white-space: nowrap;
+    }
+    .tab-btn.active {
+      background: rgba(244,185,66,0.12);
+      color: var(--gold);
+      box-shadow: inset 0 0 0 1px rgba(244,185,66,0.25);
+    }
+    .tab-btn:hover:not(.active) { color: var(--text); }
+
+    /* ══ TOOLBAR ══ */
     .toolbar {
       display: flex; gap: 10px; flex-wrap: wrap;
       margin-bottom: 18px; align-items: center;
@@ -242,10 +301,38 @@
       -webkit-tap-highlight-color: transparent;
     }
     .btn-refresh:hover { background: rgba(244,185,66,0.16); }
+    .btn-export {
+      padding: 11px 18px;
+      background: rgba(96,165,250,0.08); border: 1px solid rgba(96,165,250,0.25);
+      border-radius: 10px; color: var(--blue);
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 13px; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      cursor: pointer; transition: all 0.2s; white-space: nowrap;
+      display: flex; align-items: center; gap: 6px;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .btn-export:hover { background: rgba(96,165,250,0.16); }
+
+    .sort-wrap {
+      display: flex; gap: 4px; align-items: center;
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 10px; padding: 4px;
+    }
+    .sort-btn {
+      padding: 7px 12px; border: none; border-radius: 7px;
+      background: transparent; color: var(--muted);
+      font-family: 'Rajdhani', sans-serif; font-size: 12px;
+      font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+      cursor: pointer; transition: all 0.15s; white-space: nowrap;
+    }
+    .sort-btn.active { background: rgba(244,185,66,0.12); color: var(--gold); }
+    .sort-btn:hover:not(.active) { color: var(--text); }
+
     .spin { animation: spin 1s linear infinite; }
     @keyframes spin { to { transform: rotate(360deg); } }
 
-    /* TABLE */
+    /* ══ TABLE ══ */
     .table-wrap {
       background: var(--card); border: 1px solid var(--border);
       border-radius: 16px; overflow: hidden;
@@ -262,7 +349,7 @@
       letter-spacing: 0.22em; text-transform: uppercase;
       color: rgba(244,185,66,0.48);
     }
-    .tbl-body { max-height: 520px; overflow-y: auto; }
+    .tbl-body { max-height: 480px; overflow-y: auto; }
     .tbl-body::-webkit-scrollbar { width: 4px; }
     .tbl-body::-webkit-scrollbar-thumb { background: rgba(244,185,66,0.18); border-radius: 2px; }
 
@@ -276,6 +363,7 @@
     }
     .tbl-row:hover { background: rgba(244,185,66,0.04); }
     .tbl-row:last-child { border-bottom: none; }
+    .tbl-row.new-badge { border-left: 2px solid var(--green); }
 
     .td { font-size: 13px; font-weight: 600; color: var(--text); word-break: break-word; }
     .td-num { color: var(--muted); font-size: 12px; }
@@ -288,6 +376,25 @@
       background: rgba(244,185,66,0.1); border: 1px solid rgba(244,185,66,0.2);
       border-radius: 6px; font-size: 12px; font-weight: 700; color: var(--gold);
     }
+    .td-copyable {
+      cursor: pointer; position: relative;
+      transition: color 0.15s;
+    }
+    .td-copyable:hover { color: var(--gold); }
+    .td-copyable:hover::after {
+      content: '⧉ copy';
+      position: absolute; right: 0; top: 50%; transform: translateY(-50%);
+      font-size: 9px; color: rgba(244,185,66,0.5); letter-spacing: 0.05em;
+    }
+
+    .new-tag {
+      display: inline-block; padding: 1px 6px;
+      background: rgba(74,222,128,0.12); border: 1px solid rgba(74,222,128,0.25);
+      border-radius: 4px; font-size: 9px; font-weight: 700;
+      color: var(--green); letter-spacing: 0.08em;
+      margin-left: 5px; vertical-align: middle;
+    }
+
     .btn-view {
       padding: 5px 12px;
       background: rgba(244,185,66,0.08); border: 1px solid rgba(244,185,66,0.22);
@@ -299,6 +406,107 @@
       -webkit-tap-highlight-color: transparent;
     }
     .btn-view:hover { background: rgba(244,185,66,0.2); border-color: var(--gold); }
+
+    /* ══ RECENT JOINERS PANEL ══ */
+    #recentPanel { display: none; }
+    #recentPanel.active { display: block; }
+    #membersPanel { display: block; }
+    #membersPanel.hidden { display: none; }
+    #bloodPanel { display: none; }
+    #bloodPanel.active { display: block; }
+
+    .recent-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 14px;
+    }
+    .recent-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 14px; padding: 16px;
+      display: flex; gap: 14px; align-items: flex-start;
+      cursor: pointer; transition: all 0.2s;
+      position: relative; overflow: hidden;
+      animation: fadeSlide 0.3s ease both;
+    }
+    @keyframes fadeSlide {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .recent-card:hover { border-color: rgba(244,185,66,0.35); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.4); }
+    .recent-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, var(--gold-dark), var(--gold));
+    }
+    .rc-rank {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.6rem; color: rgba(244,185,66,0.18);
+      line-height: 1; min-width: 28px;
+    }
+    .rc-body { flex: 1; min-width: 0; }
+    .rc-name {
+      font-size: 14px; font-weight: 700; color: var(--text);
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .rc-id {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 13px; color: var(--gold); letter-spacing: 0.08em; margin-top: 2px;
+    }
+    .rc-meta {
+      margin-top: 8px; display: flex; gap: 8px; flex-wrap: wrap;
+    }
+    .rc-pill {
+      padding: 2px 8px; border-radius: 5px;
+      font-size: 10px; font-weight: 700; letter-spacing: 0.06em;
+    }
+    .rc-pill.blood {
+      background: rgba(244,185,66,0.1); border: 1px solid rgba(244,185,66,0.2); color: var(--gold);
+    }
+    .rc-pill.mobile {
+      background: rgba(96,165,250,0.08); border: 1px solid rgba(96,165,250,0.18); color: var(--blue);
+    }
+    .rc-time {
+      font-size: 10px; color: var(--muted); margin-top: 6px;
+      letter-spacing: 0.04em;
+    }
+    .rc-new-badge {
+      position: absolute; top: 12px; right: 12px;
+      padding: 2px 8px; border-radius: 5px;
+      background: rgba(74,222,128,0.12); border: 1px solid rgba(74,222,128,0.3);
+      font-size: 9px; font-weight: 700; color: var(--green); letter-spacing: 0.1em;
+    }
+
+    /* ══ BLOOD GROUP PANEL ══ */
+    .blood-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 12px;
+    }
+    .blood-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 14px; padding: 20px 18px;
+      text-align: center; cursor: pointer;
+      transition: all 0.2s;
+      animation: fadeSlide 0.3s ease both;
+    }
+    .blood-card:hover { border-color: rgba(244,185,66,0.4); transform: translateY(-2px); }
+    .blood-type {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2.4rem; color: var(--gold); letter-spacing: 0.08em;
+    }
+    .blood-count {
+      font-size: 13px; font-weight: 700; color: var(--text); margin-top: 4px;
+    }
+    .blood-count span { color: var(--muted); font-size: 11px; }
+    .blood-bar-wrap {
+      margin-top: 10px; background: rgba(255,255,255,0.05);
+      border-radius: 4px; height: 4px; overflow: hidden;
+    }
+    .blood-bar {
+      height: 100%; border-radius: 4px;
+      background: linear-gradient(90deg, var(--gold-dark), var(--gold));
+      transition: width 0.8s ease;
+    }
 
     /* STATE */
     .state-msg {
@@ -332,10 +540,10 @@
       flex-wrap: wrap; justify-content: center;
       transform: translateY(24px);
       transition: transform 0.35s ease;
+      max-height: 90vh; overflow-y: auto;
     }
     #modalOverlay.open .modal-inner { transform: translateY(0); }
 
-    /* ID CARD */
     .id-card-col { display: flex; flex-direction: column; align-items: center; gap: 12px; }
 
     .id-card {
@@ -386,7 +594,6 @@
       font-size: 9px; color: rgba(255,255,255,0.3); z-index: 3; font-family: sans-serif;
     }
 
-    /* INFO PANEL */
     .modal-info {
       background: var(--card); border: 1px solid var(--border);
       border-radius: 16px; padding: 22px 18px;
@@ -403,7 +610,11 @@
       font-size: 10px; font-weight: 700;
       letter-spacing: 0.2em; text-transform: uppercase; color: rgba(244,185,66,0.5);
     }
-    .info-val { font-size: 14px; font-weight: 600; color: var(--text); word-break: break-all; }
+    .info-val {
+      font-size: 14px; font-weight: 600; color: var(--text); word-break: break-all;
+      cursor: pointer; transition: color 0.15s;
+    }
+    .info-val:hover { color: var(--gold); }
 
     .btn-drive {
       width: 100%; padding: 10px;
@@ -442,6 +653,20 @@
       letter-spacing: 0.04em; text-align: center; line-height: 1.55;
     }
 
+    /* SECTION HEADER */
+    .section-hdr {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 14px; flex-wrap: wrap; gap: 8px;
+    }
+    .section-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.1rem; letter-spacing: 0.15em; color: var(--gold);
+    }
+    .section-count {
+      font-size: 11px; font-weight: 700; color: var(--muted);
+      letter-spacing: 0.1em;
+    }
+
     /* FOOTER */
     .footer { text-align: center; margin-top: 28px; }
     .footer-text {
@@ -467,12 +692,15 @@
       .tbl-head, .tbl-row { grid-template-columns: 36px 115px 1fr 90px 70px; }
       .tbl-head .th:nth-child(5),.tbl-head .th:nth-child(6),
       .tbl-row .td:nth-child(5),.tbl-row .td:nth-child(6) { display: none; }
+      .dashboard { grid-template-columns: repeat(2, 1fr); }
     }
     @media (max-width: 500px) {
       .tbl-head, .tbl-row { grid-template-columns: 36px 1fr 90px 66px; }
       .tbl-head .th:nth-child(3),.tbl-head .th:nth-child(5),.tbl-head .th:nth-child(6),
       .tbl-row .td:nth-child(3),.tbl-row .td:nth-child(5),.tbl-row .td:nth-child(6) { display: none; }
       .page-header { flex-direction: column; align-items: flex-start; gap: 10px; }
+      .dashboard { grid-template-columns: repeat(2, 1fr); }
+      .sort-wrap { display: none; }
     }
   </style>
 </head>
@@ -498,12 +726,11 @@
 <!-- ══ CARD MODAL ══ -->
 <div id="modalOverlay">
   <div class="modal-inner">
-
     <div class="id-card-col">
       <div class="id-card" id="captureArea">
         <img src="bg1.png" class="card-bg" alt=""
              onerror="this.style.background='linear-gradient(160deg,#1a0000,#000)'">
-        <img id="mPhoto" class="profile-pic" alt="Photo" crossorigin="anonymous">
+        <img id="mPhoto" class="profile-pic" alt="Photo" crossorigin="anonymous" onerror="this.style.opacity='0.3'">
         <div class="name-hashtag">
           <div id="mName" class="member-name"></div>
           <div class="hashtag">#CoimbatoreSFC</div>
@@ -515,7 +742,7 @@
           <div class="row"><div class="lbl">MOBILE NO</div><div class="col">:</div><div class="val" id="mPhone"></div></div>
           <div class="row"><div class="lbl">ADDRESS</div><div class="col">:</div><div class="val" id="mAddress"></div></div>
         </div>
-        <img id="mQR" class="qr-img" alt="QR" crossorigin="anonymous">
+        <img id="mQR" class="qr-img" alt="QR" crossorigin="anonymous" onerror="this.style.opacity='0.3'">
         <div class="sig">Coimbatore Suriya Fans Club</div>
       </div>
       <div class="photo-note">
@@ -526,17 +753,17 @@
 
     <div class="modal-info">
       <div class="modal-info-title">Member Details</div>
-      <div class="info-row"><div class="info-lbl">Full Name</div><div class="info-val" id="iName"></div></div>
-      <div class="info-row"><div class="info-lbl">Member ID</div><div class="info-val" id="iID"></div></div>
+      <div class="info-row"><div class="info-lbl">Full Name</div><div class="info-val" id="iName" onclick="copyText(this.textContent)"></div></div>
+      <div class="info-row"><div class="info-lbl">Member ID</div><div class="info-val" id="iID" onclick="copyText(this.textContent)"></div></div>
       <div class="info-row"><div class="info-lbl">Date of Birth</div><div class="info-val" id="iDOB"></div></div>
       <div class="info-row"><div class="info-lbl">Blood Group</div><div class="info-val" id="iBlood"></div></div>
-      <div class="info-row"><div class="info-lbl">Mobile</div><div class="info-val" id="iPhone"></div></div>
+      <div class="info-row"><div class="info-lbl">Mobile</div><div class="info-val" id="iPhone" onclick="copyText(this.textContent)"></div></div>
       <div class="info-row"><div class="info-lbl">Address</div><div class="info-val" id="iAddress"></div></div>
+      <div class="info-row"><div class="info-lbl">Joined</div><div class="info-val" id="iJoined"></div></div>
       <a id="photoLink" href="#" target="_blank" rel="noopener" class="btn-drive">↗ Open Photo in Drive</a>
       <button class="btn-dl" id="dlBtn" onclick="downloadCard()">⬇ Download ID Card</button>
       <button class="btn-close-m" onclick="closeModal()">✕ Close</button>
     </div>
-
   </div>
 </div>
 
@@ -558,36 +785,97 @@
 
 <!-- ══ MAIN ══ -->
 <div class="main">
-  <div class="toolbar">
-    <div class="search-wrap">
-      <span class="search-icon">⌕</span>
-      <input type="text" id="searchInput" class="search-input"
-             placeholder="Search name, ID, mobile…" oninput="filterTable()">
+
+  <!-- DASHBOARD -->
+  <div class="dashboard" id="dashboard" style="display:none;">
+    <div class="dash-card">
+      <div class="dash-label">Total Members</div>
+      <div class="dash-val" id="dTotal">0</div>
+      <div class="dash-sub">All time registrations</div>
     </div>
-    <select id="bloodFilter" class="filter-sel" onchange="filterTable()">
-      <option value="">All Blood Groups</option>
-    </select>
-    <button class="btn-refresh" id="refreshBtn" onclick="loadData()">
-      <svg id="rIcon" width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-        <path d="M17.65 6.35A7.958 7.958 0 0012 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08A5.99 5.99 0 0112 18c-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/>
-      </svg>
-      Refresh
-    </button>
+    <div class="dash-card green">
+      <div class="dash-label">Joined Today</div>
+      <div class="dash-val" id="dToday">0</div>
+      <div class="dash-sub">New today</div>
+    </div>
+    <div class="dash-card blue">
+      <div class="dash-label">This Week</div>
+      <div class="dash-val" id="dWeek">0</div>
+      <div class="dash-sub">Last 7 days</div>
+    </div>
+    <div class="dash-card red">
+      <div class="dash-label">Blood Types</div>
+      <div class="dash-val" id="dBlood">0</div>
+      <div class="dash-sub">Unique groups</div>
+    </div>
   </div>
 
-  <div class="table-wrap">
-    <div class="tbl-head">
-      <div class="th">#</div>
-      <div class="th">Member ID</div>
-      <div class="th">Name</div>
-      <div class="th">Blood</div>
-      <div class="th">Mobile</div>
-      <div class="th">DOB</div>
-      <div class="th">Card</div>
+  <!-- TABS -->
+  <div class="tabs" id="tabsRow" style="display:none;">
+    <button class="tab-btn active" onclick="switchTab('members')">👥 All Members</button>
+    <button class="tab-btn" onclick="switchTab('recent')">🆕 Recent Joiners</button>
+    <button class="tab-btn" onclick="switchTab('blood')">🩸 By Blood Group</button>
+  </div>
+
+  <!-- MEMBERS TAB -->
+  <div id="membersPanel">
+    <div class="toolbar">
+      <div class="search-wrap">
+        <span class="search-icon">⌕</span>
+        <input type="text" id="searchInput" class="search-input"
+               placeholder="Search name, ID, mobile…" oninput="filterTable()">
+      </div>
+      <select id="bloodFilter" class="filter-sel" onchange="filterTable()">
+        <option value="">All Blood Groups</option>
+      </select>
+      <div class="sort-wrap">
+        <button class="sort-btn active" onclick="setSort('id',this)">ID</button>
+        <button class="sort-btn" onclick="setSort('name',this)">Name</button>
+        <button class="sort-btn" onclick="setSort('newest',this)">Newest</button>
+      </div>
+      <button class="btn-export" onclick="exportCSV()">
+        ↓ CSV
+      </button>
+      <button class="btn-refresh" id="refreshBtn" onclick="loadData()">
+        <svg id="rIcon" width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M17.65 6.35A7.958 7.958 0 0012 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08A5.99 5.99 0 0112 18c-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/>
+        </svg>
+        Refresh
+      </button>
     </div>
-    <div class="tbl-body" id="tableBody">
-      <div class="state-msg"><span class="ico">🔒</span>Unlock to view membership data</div>
+
+    <div class="table-wrap">
+      <div class="tbl-head">
+        <div class="th">#</div>
+        <div class="th">Member ID</div>
+        <div class="th">Name</div>
+        <div class="th">Blood</div>
+        <div class="th">Mobile</div>
+        <div class="th">DOB</div>
+        <div class="th">Card</div>
+      </div>
+      <div class="tbl-body" id="tableBody">
+        <div class="state-msg"><span class="ico">🔒</span>Unlock to view membership data</div>
+      </div>
     </div>
+  </div>
+
+  <!-- RECENT JOINERS TAB -->
+  <div id="recentPanel">
+    <div class="section-hdr">
+      <div class="section-title">🆕 Recent Joiners</div>
+      <div class="section-count" id="recentCount">—</div>
+    </div>
+    <div class="recent-grid" id="recentGrid"></div>
+  </div>
+
+  <!-- BLOOD GROUP TAB -->
+  <div id="bloodPanel">
+    <div class="section-hdr">
+      <div class="section-title">🩸 Members by Blood Group</div>
+      <div class="section-count" id="bloodCount">—</div>
+    </div>
+    <div class="blood-grid" id="bloodGrid"></div>
   </div>
 
   <div class="footer">
@@ -598,45 +886,74 @@
 <div id="toast"></div>
 
 <script>
-  
-  function formatDate(val) {
+/* ══════════════════════════════════════════════════
+   CONFIGURATION
+══════════════════════════════════════════════════ */
+const ADMIN_PASSWORD = "cbesfc2025";
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzmBs_XiTHdmDrxGykJiaYNyn0Ntslm4CmXP0uQLANdR6yRCb7Y9yhlXjd0Di2VN_Rc/exec";
+/* ══════════════════════════════════════════════════ */
+
+/* HELPERS */
+function formatDate(val) {
   if (!val) return '—';
   const d = new Date(val);
-  if (isNaN(d)) return String(val); // already a string like "25-08-2003"
+  if (isNaN(d)) return String(val);
   const dd = String(d.getDate()).padStart(2, '0');
   const mm = String(d.getMonth() + 1).padStart(2, '0');
   const yyyy = d.getFullYear();
   return `${dd}-${mm}-${yyyy}`;
 }
-/* ══════════════════════════════════════════════════
-   CONFIGURATION
-══════════════════════════════════════════════════ */
 
-const ADMIN_PASSWORD = "cbesfc2025"; // ← change this
+function timeAgo(val) {
+  if (!val) return '';
+  const d = new Date(val);
+  if (isNaN(d)) return '';
+  const diff = Date.now() - d.getTime();
+  const mins = Math.floor(diff / 60000);
+  const hrs  = Math.floor(diff / 3600000);
+  const days = Math.floor(diff / 86400000);
+  if (mins < 1)   return 'Just now';
+  if (mins < 60)  return `${mins}m ago`;
+  if (hrs  < 24)  return `${hrs}h ago`;
+  if (days < 7)   return `${days}d ago`;
+  return formatDate(val);
+}
 
-// Your Apps Script web app URL (same one used in the registration form)
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzmBs_XiTHdmDrxGykJiaYNyn0Ntslm4CmXP0uQLANdR6yRCb7Y9yhlXjd0Di2VN_Rc/exec";
+function isWithinDays(val, n) {
+  if (!val) return false;
+  const d = new Date(val);
+  if (isNaN(d)) return false;
+  return (Date.now() - d.getTime()) < n * 86400000;
+}
 
-/*
-  ⚠  IMPORTANT — Update your code.gs first!
-  Your current Apps Script only has doPost.
-  Add the doGet function from the provided code.gs file,
-  then re-deploy (Deploy → Manage deployments → update version)
-  to the SAME web app URL.
-*/
+function isToday(val) {
+  if (!val) return false;
+  const d = new Date(val);
+  if (isNaN(d)) return false;
+  const now = new Date();
+  return d.getDate() === now.getDate() &&
+         d.getMonth() === now.getMonth() &&
+         d.getFullYear() === now.getFullYear();
+}
 
-/* ══════════════════════════════════════════════════ */
-
-// Build Google Drive thumbnail URL from file ID
 function driveThumb(id) {
   if (!id) return '';
   if (id.startsWith('http') || id.startsWith('data:')) return id;
-  return `https://lh3.googleusercontent.com/d/${id}`;
+  return `https://drive.google.com/thumbnail?id=${id}&sz=w400`;
 }
 function driveView(id) {
   if (!id) return '#';
   if (id.startsWith('http')) return id;
   return `https://drive.google.com/file/d/${id}/view`;
+}
+
+function esc(s) {
+  return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+function copyText(text) {
+  if (!text || text === '—') return;
+  navigator.clipboard.writeText(text).then(() => showToast('✓ Copied: ' + text));
 }
 
 /* PARTICLES */
@@ -683,10 +1000,13 @@ function logout() {
     '<div class="state-msg"><span class="ico">🔒</span>Unlock to view membership data</div>';
   document.getElementById('statTotal').textContent = '—';
   document.getElementById('statShowing').textContent = '—';
+  document.getElementById('dashboard').style.display = 'none';
+  document.getElementById('tabsRow').style.display = 'none';
 }
 
 /* DATA */
 let allMembers = [], filteredMembers = [], currentMember = null;
+let currentSort = 'id';
 
 async function loadData() {
   const icon = document.getElementById('rIcon');
@@ -700,7 +1020,10 @@ async function loadData() {
     allMembers = json.members || [];
     populateBloodFilter();
     filterTable();
+    updateDashboard();
     document.getElementById('statTotal').textContent = allMembers.length;
+    document.getElementById('dashboard').style.display = 'grid';
+    document.getElementById('tabsRow').style.display = 'flex';
     showToast('✓ Loaded ' + allMembers.length + ' member' + (allMembers.length !== 1 ? 's' : ''));
   } catch (err) {
     console.error(err);
@@ -709,6 +1032,44 @@ async function loadData() {
   icon.classList.remove('spin');
 }
 
+/* DASHBOARD */
+function updateDashboard() {
+  document.getElementById('dTotal').textContent = allMembers.length;
+  document.getElementById('dToday').textContent = allMembers.filter(m => isToday(m.timestamp)).length;
+  document.getElementById('dWeek').textContent  = allMembers.filter(m => isWithinDays(m.timestamp, 7)).length;
+  const uniqueBloods = new Set(allMembers.map(m => m.bloodGroup).filter(Boolean));
+  document.getElementById('dBlood').textContent = uniqueBloods.size;
+}
+
+/* TABS */
+function switchTab(tab) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+
+  document.getElementById('membersPanel').classList.toggle('hidden', tab !== 'members');
+  document.getElementById('recentPanel').classList.toggle('active', tab === 'recent');
+  document.getElementById('bloodPanel').classList.toggle('active', tab === 'blood');
+
+  if (tab === 'recent') renderRecent();
+  if (tab === 'blood')  renderBlood();
+}
+
+/* SORT */
+function setSort(s, el) {
+  currentSort = s;
+  document.querySelectorAll('.sort-btn').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+  filterTable();
+}
+
+function sortedMembers(arr) {
+  const copy = [...arr];
+  if (currentSort === 'name')   return copy.sort((a,b) => (a.name||'').localeCompare(b.name||''));
+  if (currentSort === 'newest') return copy.sort((a,b) => new Date(b.timestamp||0) - new Date(a.timestamp||0));
+  return copy.sort((a,b) => (a.memberId||'').localeCompare(b.memberId||''));
+}
+
+/* FILTER */
 function populateBloodFilter() {
   const sel = document.getElementById('bloodFilter');
   const have = new Set(Array.from(sel.options).map(o => o.value));
@@ -724,43 +1085,106 @@ function filterTable() {
   const q = document.getElementById('searchInput').value.toLowerCase();
   const b = document.getElementById('bloodFilter').value;
   filteredMembers = allMembers.filter(m =>
-    (!q || m.name.toLowerCase().includes(q) ||
-           m.memberId.toLowerCase().includes(q) ||
-           (m.mobile || '').includes(q)) &&
+    (!q || (m.name||'').toLowerCase().includes(q) ||
+           (m.memberId||'').toLowerCase().includes(q) ||
+           (m.mobile||'').includes(q)) &&
     (!b || m.bloodGroup === b)
   );
+  filteredMembers = sortedMembers(filteredMembers);
   document.getElementById('statShowing').textContent = filteredMembers.length;
   renderTable();
 }
 
+/* RENDER TABLE */
 function renderTable() {
   const body = document.getElementById('tableBody');
   if (!filteredMembers.length) {
     body.innerHTML = '<div class="state-msg"><span class="ico">🔍</span>No members match your search</div>';
     return;
   }
+  const today7 = (m) => isWithinDays(m.timestamp, 7);
   body.innerHTML = filteredMembers.map((m, i) => {
     const oi = allMembers.indexOf(m);
+    const isNew = today7(m);
     return `
-    <div class="tbl-row" onclick="openModal(${oi})">
+    <div class="tbl-row${isNew?' new-badge':''}" onclick="openModal(${oi})">
       <div class="td td-num">${i + 1}</div>
       <div class="td td-id">${esc(m.memberId)}</div>
-      <div class="td">${esc(m.name)}</div>
-      <div class="td"><span class="td-blood">${esc(m.bloodGroup) || '—'}</span></div>
-      <div class="td">${esc(m.mobile) || '—'}</div>
+      <div class="td">${esc(m.name)}${isNew?'<span class="new-tag">NEW</span>':''}</div>
+      <div class="td"><span class="td-blood">${esc(m.bloodGroup)||'—'}</span></div>
+      <div class="td td-copyable" onclick="event.stopPropagation();copyText('${esc(m.mobile)}')">${esc(m.mobile)||'—'}</div>
       <div class="td">${formatDate(m.dob)}</div>
       <div class="td">
-        <button class="btn-view"
-          onclick="event.stopPropagation();openModal(${oi})">View</button>
+        <button class="btn-view" onclick="event.stopPropagation();openModal(${oi})">View</button>
       </div>
     </div>`;
   }).join('');
 }
 
-function esc(s) {
-  return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+/* RECENT JOINERS */
+function renderRecent() {
+  const sorted = [...allMembers].sort((a,b) => new Date(b.timestamp||0) - new Date(a.timestamp||0));
+  const recent = sorted.slice(0, 20);
+  document.getElementById('recentCount').textContent = `Showing latest ${recent.length} of ${allMembers.length}`;
+  if (!recent.length) {
+    document.getElementById('recentGrid').innerHTML = '<div class="state-msg"><span class="ico">📭</span>No members found</div>';
+    return;
+  }
+  document.getElementById('recentGrid').innerHTML = recent.map((m, i) => {
+    const oi = allMembers.indexOf(m);
+    const isNew = isWithinDays(m.timestamp, 1);
+    return `
+    <div class="recent-card" onclick="openModal(${oi})" style="animation-delay:${i*0.04}s">
+      <div class="rc-rank">${String(i+1).padStart(2,'0')}</div>
+      <div class="rc-body">
+        <div class="rc-name">${esc(m.name)}</div>
+        <div class="rc-id">${esc(m.memberId)}</div>
+        <div class="rc-meta">
+          ${m.bloodGroup ? `<span class="rc-pill blood">${esc(m.bloodGroup)}</span>` : ''}
+          ${m.mobile ? `<span class="rc-pill mobile">${esc(m.mobile)}</span>` : ''}
+        </div>
+        <div class="rc-time">${m.timestamp ? timeAgo(m.timestamp) : 'Date unknown'}</div>
+      </div>
+      ${isNew ? '<div class="rc-new-badge">TODAY</div>' : ''}
+    </div>`;
+  }).join('');
 }
 
+/* BLOOD GROUP PANEL */
+function renderBlood() {
+  const counts = {};
+  allMembers.forEach(m => {
+    const g = m.bloodGroup || 'Unknown';
+    counts[g] = (counts[g] || 0) + 1;
+  });
+  const max = Math.max(...Object.values(counts));
+  const sorted = Object.entries(counts).sort((a,b) => b[1]-a[1]);
+  document.getElementById('bloodCount').textContent = `${sorted.length} blood groups · ${allMembers.length} total members`;
+
+  document.getElementById('bloodGrid').innerHTML = sorted.map(([g, count], i) => {
+    const pct = Math.round((count / allMembers.length) * 100);
+    const barW = Math.round((count / max) * 100);
+    return `
+    <div class="blood-card" onclick="filterByBlood('${g}')" style="animation-delay:${i*0.06}s">
+      <div class="blood-type">${esc(g)}</div>
+      <div class="blood-count">${count} <span>members (${pct}%)</span></div>
+      <div class="blood-bar-wrap">
+        <div class="blood-bar" style="width:${barW}%"></div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function filterByBlood(group) {
+  switchTab('members');
+  document.querySelectorAll('.tab-btn')[0].classList.add('active');
+  document.querySelectorAll('.tab-btn').forEach((b,i) => { if(i!==0) b.classList.remove('active'); });
+  document.getElementById('bloodFilter').value = group;
+  filterTable();
+  showToast(`Filtered: ${group} — ${filteredMembers.length} member(s)`);
+}
+
+/* STATE */
 function showState(type, msg) {
   const body = document.getElementById('tableBody');
   if (type === 'loading') {
@@ -770,20 +1194,35 @@ function showState(type, msg) {
   }
 }
 
+/* CSV EXPORT */
+function exportCSV() {
+  if (!allMembers.length) { showToast('⚠ No data to export'); return; }
+  const headers = ['Member ID','Name','Blood Group','Mobile','DOB','Address'];
+  const rows = filteredMembers.map(m => [
+    m.memberId, m.name, m.bloodGroup, m.mobile, formatDate(m.dob), m.address
+  ].map(v => `"${String(v||'').replace(/"/g,'""')}"`).join(','));
+  const csv = [headers.join(','), ...rows].join('\n');
+  const a = document.createElement('a');
+  a.href = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv);
+  a.download = `CBE_SFC_Members_${new Date().toISOString().slice(0,10)}.csv`;
+  a.click();
+  showToast(`✓ Exported ${filteredMembers.length} members`);
+}
+
 /* MODAL */
 function openModal(idx) {
   const m = allMembers[idx];
   if (!m) return;
   currentMember = m;
 
-  document.getElementById('mPhoto').src      = driveThumb(m.photoId);
-  document.getElementById('mName').textContent   = (m.name||'').toUpperCase();
-  document.getElementById('mID').textContent     = m.memberId;
-  document.getElementById('mBlood').textContent  = m.bloodGroup;
-  document.getElementById('mDOB').textContent    = formatDate(m.dob);
-  document.getElementById('mPhone').textContent  = m.mobile;
-  document.getElementById('mAddress').textContent= m.address;
-  document.getElementById('mQR').src             = driveThumb(m.qrId);
+  document.getElementById('mPhoto').src       = driveThumb(m.photoId);
+  document.getElementById('mName').textContent    = (m.name||'').toUpperCase();
+  document.getElementById('mID').textContent      = m.memberId;
+  document.getElementById('mBlood').textContent   = m.bloodGroup;
+  document.getElementById('mDOB').textContent     = formatDate(m.dob);
+  document.getElementById('mPhone').textContent   = m.mobile;
+  document.getElementById('mAddress').textContent = m.address;
+  document.getElementById('mQR').src              = driveThumb(m.qrId);
 
   document.getElementById('iName').textContent    = m.name;
   document.getElementById('iID').textContent      = m.memberId;
@@ -791,6 +1230,7 @@ function openModal(idx) {
   document.getElementById('iBlood').textContent   = m.bloodGroup;
   document.getElementById('iPhone').textContent   = m.mobile;
   document.getElementById('iAddress').textContent = m.address;
+  document.getElementById('iJoined').textContent  = m.timestamp ? timeAgo(m.timestamp) + ' · ' + formatDate(m.timestamp) : '—';
   document.getElementById('photoLink').href        = driveView(m.photoId);
 
   document.getElementById('modalOverlay').classList.add('open');
