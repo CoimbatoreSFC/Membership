@@ -598,6 +598,16 @@
 <div id="toast"></div>
 
 <script>
+  
+  function formatDate(val) {
+  if (!val) return '—';
+  const d = new Date(val);
+  if (isNaN(d)) return String(val); // already a string like "25-08-2003"
+  const dd = String(d.getDate()).padStart(2, '0');
+  const mm = String(d.getMonth() + 1).padStart(2, '0');
+  const yyyy = d.getFullYear();
+  return `${dd}-${mm}-${yyyy}`;
+}
 /* ══════════════════════════════════════════════════
    CONFIGURATION
 ══════════════════════════════════════════════════ */
@@ -738,7 +748,7 @@ function renderTable() {
       <div class="td">${esc(m.name)}</div>
       <div class="td"><span class="td-blood">${esc(m.bloodGroup) || '—'}</span></div>
       <div class="td">${esc(m.mobile) || '—'}</div>
-      <div class="td">${esc(m.dob) || '—'}</div>
+      <div class="td">${formatDate(m.dob)}</div>
       <div class="td">
         <button class="btn-view"
           onclick="event.stopPropagation();openModal(${oi})">View</button>
@@ -770,14 +780,14 @@ function openModal(idx) {
   document.getElementById('mName').textContent   = (m.name||'').toUpperCase();
   document.getElementById('mID').textContent     = m.memberId;
   document.getElementById('mBlood').textContent  = m.bloodGroup;
-  document.getElementById('mDOB').textContent    = m.dob;
+  document.getElementById('mDOB').textContent    = formatDate(m.dob);
   document.getElementById('mPhone').textContent  = m.mobile;
   document.getElementById('mAddress').textContent= m.address;
   document.getElementById('mQR').src             = driveThumb(m.qrId);
 
   document.getElementById('iName').textContent    = m.name;
   document.getElementById('iID').textContent      = m.memberId;
-  document.getElementById('iDOB').textContent     = m.dob;
+  document.getElementById('iDOB').textContent     = formatDate(m.dob);
   document.getElementById('iBlood').textContent   = m.bloodGroup;
   document.getElementById('iPhone').textContent   = m.mobile;
   document.getElementById('iAddress').textContent = m.address;
